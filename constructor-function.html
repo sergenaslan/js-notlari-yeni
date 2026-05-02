@@ -1,0 +1,86 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>Constructor Function</h1>
+  <!-- Constructor Function Nedir? -->
+  <div class="box">
+    <h2>Constructor Function Nedir?</h2>
+    <p>
+      Constructor function, JavaScript'te benzer özelliklere sahip birden çok nesne (object) oluşturmak için kullanılan bir şablondur. Normal fonksiyonlardan farkı, new anahtar kelimesiyle çağrılmaları ve this anahtar kelimesini kullanmalarıdır.
+    </p>
+<pre><code>
+const user1 = {
+  name: "Ali",
+  age: 25
+};
+
+const user2 = {
+  name: "Ayşe",
+  age: 30
+};
+yukarıdaki gibi tek tek yazmak yerine aşşağıdaki gibi bir constructor function tanımlaması ile 
+istenilen sayıda nesne üretilebilnir.
+
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const user1 = new User("Ali", 25);
+const user2 = new User("Ayşe", 30);
+
+console.log(user1); // User { name: 'Ali', age: 25 }
+console.log(user2); // User { name: 'Ayşe', age: 30 }
+</code></pre>
+<h4>Mantığı nedir?</h4>
+<ul>
+  <li>ortak yapıya sahip nesneler üretmek</li>
+  <li>kod tekrarını azaltmak</li>
+  <li>her nesneye özellik ve metot verebilmek</li>
+</ul>
+  </div>
+
+
+    <!-- Prototype ile Metot Paylaşımı -->
+  <div class="box">
+    <h2>Prototype ile Metot Paylaşımı</h2>
+    <p>Her nesnede aynı fonksiyonu tekrar tekrar oluşturmamak için metotları prototype'a eklemek daha verimlidir.</p>
+<pre><code>
+function Kisi(isim, yas) {
+    this.isim = isim;
+    this.yas = yas;
+}
+
+// Metodu prototype'a ekleme (tüm nesneler paylaşır)
+Kisi.prototype.selamVer = function() {
+    console.log(`Merhaba, ben ${this.isim}`);
+};
+
+const ali = new Kisi("Ali", 25);
+const ayse = new Kisi("Ayşe", 30);
+
+ali.selamVer(); // Merhaba, ben Ali
+ayse.selamVer(); // Merhaba, ben Ayşe
+
+// İkisi de aynı fonksiyonu kullanır (hafıza tasarrufu)
+console.log(ali.selamVer === ayse.selamVer); // true
+
+</code></pre>
+  </div>
+
+    <!-- yazım ve kullanım  -->
+  <div class="box">
+    <h2>Yazım ve Kullanım Kuralları</h2>
+    <p>Constructor Functionların ilk harfi büyük olarak yazılır. Kullanıldığı yerde <strong>new</strong> anahtar 
+      kelimesi ile kullanılır ve normal fonksiyon kullanımından ayırılan noktası burasıdır.
+    </p>
+<pre><code>
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const user1 = new User("Ali", 25);
+</code></pre>
+  </div>
+</body>
+</html>

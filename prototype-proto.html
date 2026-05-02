@@ -1,0 +1,43 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>prototype ve  __proto__  Konusu</h1>
+  <p>mesela bir web sitesi yapıyosun bu prototype oluyor bu web sitesnin linki bir qr koda dönüştürüyorsun buda __proto__ oluyor</p>
+  <!-- prototype  -->
+  <div class="box">
+    <h2>prototype </h2>
+    <p>Constructor function'ların (veya class'ların) üzerinde tanımlı statik bir özelliktir. Amacı, o constructor'dan new ile üretilecek tüm instance'ların ortak kullandığı metodları ve özellikleri tek bir yerde tutmaktır.</p>
+    <p><strong>Gerçek Hayat:</strong>Bir fabrikanın "ortak kullanım talimatı defteri" (Bu defter fabrikanın duvarında asılıdır. Fabrikadan çıkan her ürün, bu deftere bakar.)</p>
+  </div>
+
+ <!-- __proto__ -->
+  <div class="box">
+    <h2>__proto__</h2>
+    <p>Herhangi bir instance'ın (nesnenin) içinde bulunan gizli bir bağlantıdır (referans). Bu bağlantı, o instance'ın miras aldığı (yani ortak veri havuzu olarak kullandığı) prototype nesnesini işaret eder.</p>
+    <p><strong>Gerçek Hayat:</strong>Bir fabrikanın "ortak kullanım talimatı defteri" (Bu defter fabrikanın duvarında asılıdır. Fabrikadan çıkan her ürün, bu deftere bakar.)</p>
+  </div>
+
+<pre><code>
+Constructor Function oluşum aşaması
+
+new Array()  > bu kısa kullanımdır []
+   |
+   |
+   ↓
+Array.prototype  ← methodlar burada yaşar  (method havuzu) Array nesnesinin .push .filter .map gibi metodları burada durur
+   |
+   ↓
+user1.__proto__   ← array yin method havuzu nun referansı instance oluşturulan bu key değerine atanır bu değer üzerinden array in method havuzuna erişilir
+   |
+   |
+   ↓
+user1 instance
+
+user1.__proto__ === Array.prototype ✅
+
+prototype → constructor function'ın özelliği
+__proto__ → instance'ın array prototypelarına giden yol
+</code></pre>
+
+
+</body>
+</html>

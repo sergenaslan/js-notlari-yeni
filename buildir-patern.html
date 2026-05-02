@@ -1,0 +1,98 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1></h1>
+
+  <!--  -->
+  <div class="box">
+    <h2></h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+</body>
+</html>
+<script>
+
+export class Button {
+  status = false;
+  title = null;
+  func = null;
+}
+export class Payload {
+  status = true;
+  title = resolveWord('WARNING');
+  closeIcon = true;
+  text = null;
+  image = null;
+  leftButton = null;
+  rightButton = null;
+  centeredText = false;
+}
+export class ModelDispatch {
+  type = 'TYMODAL_OPEN_ACTION';
+  payload = null;
+  static Builder = function (titleOne) {
+    this.modelDispatch = new ModelDispatch();
+    this.modelDispatch.payload = new Payload();
+    this.modelDispatch.payload.title = titleOne;
+    this.modelDispatch.payload.leftButton = new Button();
+    this.modelDispatch.payload.rightButton = new Button();
+    this.modelDispatch.payload.rightButton.status = true;
+    this.modelDispatch.payload.rightButton.title = 'Anladım';
+    this.withType = function (type) {
+      this.modelDispatch.type = type;
+      return this;
+    };
+    this.withCloseIcon = function (closeIcon) {
+      this.modelDispatch.payload.closeIcon = closeIcon;
+      return this;
+    };
+    this.withText = function (text) {
+      this.modelDispatch.payload.text = text;
+      return this;
+    };
+    this.withImage = function (image) {
+      this.modelDispatch.payload.image = image;
+      return this;
+    };
+    this.withLeftButtonStatus = function (status) {
+      this.modelDispatch.payload.leftButton.status = status;
+      return this;
+    };
+    this.withLeftButtonTitle = function (title) {
+      this.modelDispatch.payload.leftButton.title = title;
+      return this;
+    };
+    this.withLeftButtonFunc = function (func) {
+      this.modelDispatch.payload.leftButton.func = func;
+      return this;
+    };
+    this.withRightButtonStatus = function (status) {
+      this.modelDispatch.payload.rightButton.status = status;
+      return this;
+    };
+    this.withRightButtonTitle = function (title) {
+      this.modelDispatch.payload.rightButton.title = title;
+      return this;
+    };
+    this.withRightButtonFunc = function (func) {
+      this.modelDispatch.payload.rightButton.func = func;
+      return this;
+    };
+    this.build = function () {
+      const builtModel = this.modelDispatch;
+      const {...destructured} = builtModel; // class -> plain JS object
+      return destructured;
+    };
+    this.withCenteredText = function (centered) {
+      this.modelDispatch.payload.centeredText = centered;
+      return this;
+    };
+    return this;
+  };
+}
+
+</script>
