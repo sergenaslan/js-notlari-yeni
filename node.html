@@ -1,0 +1,155 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}.desc{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>Node js Çalışma Notları</h1>
+      <!-- createServer -->
+      <div class="box">
+        <h2>createServer Server Oluşturma</h2>
+        <div class="desc">
+          Aşşağıda En basit haliyle bir node server örneği bulunmaktadır
+        </div>
+<pre><code>
+const http = require('http');
+
+const server = http.createServer((request, response ) => {
+    console.log(request.url);
+    response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    response.end('hermaba');
+});
+
+server.listen(3000, () => {
+    console.log('Server çalışıyor 🚀');
+});
+
+/* 
+request 
+gelen istedğin detaylarını öğrenebileceğimiz fonksiyonların bulunuğu bir nesne
+response 
+gelen isteğe cevap verirken kullanabileceğimiz fonksiyonların bulunduğu nesne
+ */
+</code></pre>
+      </div>
+
+
+      <!-- Router  -->
+      <div class="box">
+        <h2>Router Nesnesi </h2>
+        <div class="desc">Router Nesnesi route’ları ayrı dosyalara bölerek projeyi düzenli yapmanı sağlar.</div>
+<pre><code>
+//signIn.js
+
+const express = require('express');
+const router = express.Router();
+
+router.get('/signIn', (req, res) => {
+    res.send("signIn sayfası");
+});
+
+router.post('/signUp', (req, res) => {
+    res.send("signUp sayfası");
+});
+
+module.exports = router;
+
+</code></pre> 
+
+<pre><code>
+ //App.js
+const express = require('express');
+const app = express();
+
+const signIn = require('./routes/signIn');
+
+app.use('/user', signIn);
+// app.use() fonksiyonu, middleware veya router'ları Express uygulamasına eklemek için kullanılır.
+app.listen(3000, () => {
+    console.log("express server çalıştı.");
+});
+
+</code></pre>
+
+      </div>
+
+
+
+
+
+   <!-- Middleware -->
+      <div class="box">
+        <h2>Middleware Konusu</h2>
+        <div class="desc">
+          Middleware, istek (request) ile cevap (response) arasına girip işlem yapan fonksiyondur.
+          <br> Middleware = İstek geldiğinde arada çalışan yardımcı fonksiyon
+          <ul>
+            <li>veri kontrol etmek, log tutmak, yetki kontrolü yapmak, body parse etmek, route’a yönlendirmek</li>
+          </ul>
+        </div>
+
+<pre><code>
+// isLoginMiddleware.js
+
+const isLogin = (req, res, next) => {
+    const isLogin = true;
+
+    if (isLogin)
+        next();
+    else
+        res.send("Lütfen giriş yapın.");
+};
+
+module.exports = isLogin;
+</code></pre>
+
+<pre><code>
+//profile.js
+
+const express = require('express');
+const router = express.Router();
+
+// helpers
+const isLogin = require('./isLoginMiddleware');
+
+router.get('/', isLogin, (req, res) => {
+    res.send("profile sayfası");
+});
+
+module.exports = router;  
+</code></pre>
+
+<pre><code>
+//App.js
+const express = require('express');
+const app = express();
+const profile = require('./routes/profile');
+ 
+ 
+app.use('/profile', profile);
+
+ 
+app.listen(3000, () => {
+    console.log("express server çalıştı.");
+});
+
+</code></pre>
+
+      </div>
+
+
+
+
+
+      <!--  -->
+      <div class="box">
+        <div class="title">
+          <h2></h2>
+          <span class="badge"></span>
+        </div>
+        <div class="desc">
+        </div>
+<pre><code>
+
+
+</code></pre>
+      </div>
+
+</body>
+</html>

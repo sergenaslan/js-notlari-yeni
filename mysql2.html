@@ -1,0 +1,160 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}.desc{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>mysql2 Kütüphanesi Çalışma Notları</h1>
+    <div class="box">
+    <h2>createConnection() Fonksiyonu</h2>
+    <div class="desc"> MySQL bağlantı ayarlarını tanımlandığı fonksiyon</div>
+        <pre>
+<code>
+const mysql = require("mysql2");
+
+let connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "sadik123",
+    database: "blogapp",
+
+    port: 3306,               //port numarası
+    charset: "utf8mb4",       //charset Türkçe karakter için
+    connectTimeout: 10000     //Bağlantı süresi limiti (Bağlantı kaç ms beklesin?)
+    multipleStatements: true  //tek sorguda birden fazla SQL çalıştırma default false
+    ssl: true,                //uzak sunucu için güvenli bağlantı Cloud MySQL kullanırken gerekir.
+    waitForConnections:true,  //pool kullanırken default true
+    connectionLimit: 10,      //pool bağlantı sayısı
+    queueLimit: 0             //bağlantı kuyruğu limit 0=> sınırsız
+
+});
+</code>
+        </pre>
+    </div>
+    <!--  -->
+    <div class="box">
+    <h2>createPool() Fonksiyonu</h2>
+    <div class="desc">MySQL veritabanı için birden fazla bağlantıyı yöneten bir bağlantı havuzu oluşturur.</div>
+        <pre>
+<code>
+const mysql = require("mysql2");
+
+let connection = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "sadik123",
+    database: "blogapp",
+
+    //createPool özel aşşağıdaki fonksiyonlar
+    connectionLimit: 10         //Aynı anda maksimum kaç bağlantı açık olabilir.
+    waitForConnections: true,   //Bağlantı limiti dolduysa ne yapılacağını belirler. true boş bağlantı için bekler false hata fırlatır 
+    queueLimit: 0               //Bekleyen maksimum istek sayısı 0 sınırız
+    maxIdle: 5                  //Idle (boşta duran) bağlantı sayısı limiti. Pool içinde gereksiz bağlantı birikmesini önler.
+    idleTimeout: 60000          //Boşta duran bağlantı ne kadar süre sonra kapansın? (ms cinsinden 60 saniye)
+    enableKeepAlive: true       // Bağlantıyı canlı tutar Uzun süreli backend servislerinde faydalı
+    keepAliveInitialDelay: 0    //KeepAlive başlama süresi Genelde değiştirilmez
+
+});
+</code>
+        </pre>
+    </div>
+    <!--  -->
+    <div class="box">
+    <h2>connect() Fonksiyonu</h2>
+    <div class="desc">MySQL server ile fiziksel bağlantıyı başlatır. Server açılırken ve Bağlantıyı test etmek için ve hata kontrolü yapmak için kullanılır</div>
+        <pre>
+<code>
+const mysql = require("mysql2");
+
+let connection = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "sadik123",
+    database: "blogapp",
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.log("Bağlantı hatası:", err);
+  } else {
+    console.log("Bağlandı");
+  }
+});
+</code>
+        </pre>
+    </div>
+    <!--  -->
+    <div class="box">
+    <h2>query() Fonksiyonu</h2>
+    <div class="desc">mysql2 içindeki query() fonksiyonu SQL sorgularını çalıştırmak ve veritabanından sonuç almak için kullanılır.</div>
+        <pre>
+<code>
+const mysql = require("mysql2");
+
+let connection = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "sadik123",
+    database: "blogapp",
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.log("Bağlantı hatası:", err);
+  } else {
+    console.log("Bağlandı");
+    connection.query("select * from blog", function(err, result) {
+        console.log(result[0]);
+    });
+  }
+});
+</code>
+        </pre>
+    </div>
+
+    <!--  -->
+    <div class="box">
+    <h2>.promise() Fonskiyonu</h2>
+    <div class="desc"></div>
+        <pre>
+<code>
+const mysql = require("mysql2");
+
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "1234",
+  database: "testdb"
+});
+
+//burada promise() özelliği kullanılmadan query sorgusu yapıldı bu kullanımda query fonksiyonuna
+//2. parametre olarak bir callback fonksiyonu gönderildi ve sorgu bittiğinde bu fonskiyon çalıştırılacak
+//bu kullanım callback hell oluşmasına neden olabilir 
+connection.query("SELECT * FROM users", function(err, rows) {
+  console.log(rows);
+});
+
+//promise() özelliğini burada kullandığımız için ve geriye bir promise döndüreceği için 
+// sorgunun sonucunu await ile bekleyerek alabiliyoruz ve callback hell önüne geçip daha okunabilir 
+const db = connection.promise();
+async function getUsers() {
+  const [rows] = await db.query("SELECT * FROM users");
+  console.log(rows);
+}
+
+getUsers();
+
+</code>
+        </pre>
+    </div>
+
+        <!--  -->
+    <div class="box">
+    <h2></h2>
+    <div class="desc"></div>
+        <pre>
+<code>
+
+
+
+</code>
+        </pre>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1416 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ES Örnek Sayfa</title>
+</head>
+<body>
+
+
+  <div class="container">
+   
+    <h1>ES5 (ECMAScript 2009) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+      <!-- map() -->
+      <div class="box">
+        <div class="title">
+          <h2>.map() Fonksiyonu </h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Verilen dizi elemanlarına, girilen callback fonksiyonu uygular ve elde edilen sonuçlarla yeni bir dizi oluşturur.
+        </div>
+<pre><code>
+const urunler = [
+    { id: 1, name: "Kalem", fiyat: 5 },
+    { id: 2, name: "Defter", fiyat: 10 },
+    { id: 3, name: "Silgi", fiyat: 2 },
+    { id: 4, name: "Kalemtraş", fiyat: 7 },
+];
+
+let newUrunlerArr = urunler.map( (item) => {
+    return {...item, name : `Yeni ${item.name}`, fiyat : item.fiyat *2}
+});
+
+console.log(newUrunlerArr); // Yeni bir arr geriye döner.
+</code></pre>
+      </div>
+
+      <!-- .filter() -->
+      <div class="box">
+        <div class="title">
+          <h2>.filter() Fonksiyonu</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+           Verilen dizi elemanlarına, girilen callback fonksiyonu uygular,
+          <b>false</b> döndüren sonuçları eler ve <b>true</b> döndüren sonuçlarla yeni bir dizi oluşturur.
+          <ul>
+            <li>İleri Düzey Kullanımı için bu <a target="_blank" href="https://codepen.io/sergenaslan/pen/XJjdQKz">linke</a> bak</li>
+          </ul>
+        </div>
+<pre><code>
+const urunler = [
+    { id: 1, name: "Kalem", fiyat: 5 },
+    { id: 2, name: "Defter", fiyat: 10 },
+    { id: 3, name: "Silgi", fiyat: 2 },
+    { id: 4, name: "Kalemtraş", fiyat: 7 },
+];
+
+let newUrunlerArr = urunler.filter( (item) => {
+    return item.fiyat  >  5
+});
+
+let yontemIki = urunler.filter( (item) => {
+    if(item.name  == 'Kalem'){
+      return true
+    }
+    if(item.name  == 'Defter'){
+      return true
+    }
+    return false 
+});
+
+console.log(newUrunlerArr); // Yeni bir arr geriye döner.
+console.log(yontemIki); // Yeni bir arr geriye döner.
+</code></pre>
+      </div>
+
+      <!-- .some() -->
+      <div class="box">
+        <div class="title">
+          <h2>.some() Fonksiyonu</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Dizide en az bir elemanın, girilen koşulu sağlayıp sağlamadığıyla ilgili true/false döndürür.
+            eğer belirlenen koşulu sağlayan bir dizi elemanı var ise true döndürür ve döngüyü sonlandırır yok ise false döndürür
+        </div>
+<pre><code>
+const urunler = [
+  { id: 1, name: "Kalem", fiyat: 5 },
+  { id: 2, name: "Defter", fiyat: 10 },
+  { id: 3, name: "Silgi", fiyat: 2 },
+  { id: 4, name: "Kalemtraş", fiyat: 7 },
+];
+
+let someResult1 = urunler.some((item)=>{
+    return item.fiyat < 2
+});
+
+let someResult2 = urunler.some((item)=>{
+    return item.fiyat > 7
+});
+console.log(someResult1); //false
+console.log(someResult2); //true
+</code></pre>
+      </div>
+
+      <!-- .every()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.every() Fonksiyonu</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Dizideki tüm elemanların girili koşulu sağlayıp sağlamadığıyla ilgili true/false döndürür.  
+          <ul>
+            <li>
+              Eğer dizideki bütün elemanlar girilen koşulu sağlıyorsa true değeri döndürür.
+            </li>
+            <li>
+              Eğer dizidek elemanlardan bir tanesi bile girilen koşulu sağlamıyorsa false değeri döndürür.
+            </li>
+          </ul>
+        </div>
+<pre><code>
+const urunler = [
+  { id: 1, name: "Kalem", fiyat: 5 },
+  { id: 2, name: "Defter", fiyat: 10 },
+  { id: 3, name: "Silgi", fiyat: 2 },
+  { id: 4, name: "Kalemtraş", fiyat: 7 },
+];
+
+let someResult1 = urunler.every((item)=>{
+    return item.fiyat > 1
+});
+
+let someResult2 = urunler.every((item)=>{
+    return item.fiyat > 2
+});
+console.log(someResult1); //true
+console.log(someResult2); //false
+</code></pre>
+      </div>
+
+      <!--  Array.forEach() -->
+      <div class="box">
+        <div class="title">
+          <h2></h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+         Dizi elemanlarını tek tek dolaşmak için kullanılır.
+        </div>
+<pre><code>
+var numbers = [1, 2, 3, 4];
+
+numbers.forEach(function(num) {
+  console.log(num);
+});
+</code></pre>
+      </div>
+
+      <!-- Array.reduce()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Array.reduce()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Diziyi tek tek dolaşır ve her adımda sonucu güncelleyerek tek bir değer üretir.
+        </div>
+<pre><code>
+var numbers = [1, 2, 3, 4];
+
+// dizi elemanlarını topladı
+var sum = numbers.reduce(function(total, num) {
+  return total + num;
+}, 0); //başlangıç değeri 0
+console.log(sum); //10
+
+//dizideki en buyuk sayıyı bulma
+const nums = [5,8,2,15,3]
+
+const max = nums.reduce((acc,num)=>{
+   return num > acc ? num : acc
+})
+console.log(max) // 15
+
+dizi.reduce((birikenDeger, dizininOnkiElemanı, elemanınIndex, dizi)=>{
+}, baslangıcDegeri)
+//baslangıç değeri verilmez ise dizinin ilk elemanın degerini alır
+
+// --- Internal source of truth (not exported) ---
+const CONFIG_SPEC = Object.freeze({
+  DISCOUNT_ENABLED: { frontend: 'frontend.providerDiscount.enabled', default: false },
+  BOT_CHAT_ENABLED: { frontend: 'frontend.liveChatBot.enabled', default: false },
+  THREEDS_ENABLED: { frontend: 'frontend.threeDS.enabled', default: false },
+});
+
+// --- Derived objects don't touch ---
+const DC = Object.keys(CONFIG_SPEC).reduce((acc, k) => {
+  acc[k] = CONFIG_SPEC[k].default;
+  return acc;
+}, {});
+</code></pre>
+      </div>
+
+      <!-- Array.isArray()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Array.isArray() </h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Bir değerin dizi olup olmadığını kontrol eder. Dizi ise ture değilse false döner
+        </div>
+<pre><code>
+var arr = [1,2,3];
+
+console.log(Array.isArray(arr)); true
+</code></pre>
+      </div>
+      
+      <!-- Array.indexOf()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Array.indexOf()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Bir elemanın dizide kaçıncı indexte olduğunu bulur.
+        </div>
+<pre><code>
+let fruits = ["apple", "banana", "orange"];
+
+console.log(fruits.indexOf("banana")); //1
+</code></pre>
+      </div>
+
+      <!-- Object.keys()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Object.keys()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Bir objenin tüm property isimlerini dizi olarak verir.
+        </div>
+<pre><code>
+var user = {
+  name: "Ali",
+  age: 25
+};
+
+console.log(Object.keys(user)); // ['name', 'age']
+</code></pre>
+      </div>
+
+      <!--  use strict  -->
+      <div class="box">
+        <div class="title">
+          <h2>use strict Strict Mode</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          JavaScript’te daha güvenli ve hataları erken yakalayan bir moddur.
+        </div>
+<pre><code>
+"use strict";
+
+x = 10; // hata verir
+var b = 10; // hata vermez
+</code></pre>
+      </div>
+
+      <!-- JSON.parse() ve JSON.stringify() -->
+      <div class="box">
+        <div class="title">
+          <h2>JSON.parse() ve JSON.stringify()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          JSON verisini JS objesine veya stringe çevirir.
+        </div>
+<pre><code>
+var json = '{"name":"Ali","age":25}';
+
+var obj = JSON.parse(json);
+
+console.log(obj.name);
+
+var user = { name: "Ali", age: 25 };
+
+var json = JSON.stringify(user);
+
+console.log(json);
+</code></pre>
+      </div>
+
+      <!-- Object.defineProperty()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Object.defineProperty()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Object.defineProperty() JavaScript’te bir objenin property’sini (özelliğini) daha kontrollü şekilde tanımlamak için kullanılır.
+          <ul>
+            <li>
+              writable (yazılabilir mi) Property değiştirilebilir mi
+            </li>
+            <li>
+              enumerable (listelenebilir mi) Property for...in veya Object.keys() içinde görünür mü
+            </li>
+            <li>
+              configurable (silinebilir mi) Property silinebilir veya yeniden tanımlanabilir mi
+            </li>
+          </ul>
+        </div>
+<pre><code>
+
+const user = {};
+Object.defineProperty(user, "name", {
+  value: "Sergen",
+  writable: false, //Property değiştirilebilir mi?
+  enumerable: false, //listelenebilir mi
+  configurable: false, //silinebilir mi
+});
+
+console.log(user.name);
+
+const obj = {}
+Object.defineProperty(obj, "name", { value: "Sergen" })
+//yazılmayan özellikler default olarak false olarak eklenmiş olur
+
+const config = {};
+Object.defineProperty(config, "API_KEY", {
+  value: "abc123",
+  writable: false
+});
+</code></pre>
+      </div>
+
+      <!-- Object.defineProperties()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Object.defineProperties()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          defineProperty() özellikğinin tek bir değer eklemek için yaptığının aynısını 
+          birde fazla değer eklemek için yapar.
+        </div>
+<pre><code>
+const obj = {}
+Object.defineProperties(obj, {
+  name: { value: "Sergen" },
+  age: { value: 29 }
+})  
+</code></pre>
+      </div>
+
+      <!--Object.freeze()-->
+      <div class="box">
+        <div class="title">
+          <h2>Object.freeze()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+          Object.freeze() JavaScript’te bir nesneyi tamamen kilitlemek (dondurmak) için kullanılır.
+          Yani bu fonksiyon çağrıldıktan sonra o nesne üzerinde değişiklik yapılamaz.
+          yeni değer eklenemez eklenmiş değerler üzerinde değişiklik yapılamaz
+        </div>
+<pre><code>
+const user = {
+  name: "Sergen",
+  age: 30
+};
+
+Object.freeze(user);
+
+user.name = "Halil";   // değiştirmeye çalıştık
+user.age = 40;         // değiştirmeye çalıştık
+
+console.log(user); // degismedi {name: 'Sergen', age: 30}
+
+const CONFIG_SPEC = Object.freeze({
+  DISCOUNT_ENABLED: { frontend: 'frontend.providerDiscount.enabled', default: false },
+  BOT_CHAT_ENABLED: { frontend: 'frontend.liveChatBot.enabled', default: false },
+  THREEDS_ENABLED: { frontend: 'frontend.threeDS.enabled', default: false },
+});
+</code></pre>
+      </div>
+
+      <!--Object.seal()-->
+      <div class="box">
+        <div class="title">
+          <h2>Object.seal()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+         freeze gibi çalışır objeyi kilitler yeni değer eklenemez var olan değer silnemez ama 
+         var olan bir özelliği değeri değiştirilebilinir.
+        </div>
+<pre><code>
+const product = {
+  name: "Fig",
+  price: 100
+}
+
+Object.seal(product)
+
+product.price = 120   // çalışır
+product.stock = 50    // eklenmez
+delete product.name   // silinmez
+
+console.log(product)
+</code></pre>
+      </div>
+
+       <!--Object.preventExtensions()-->
+      <div class="box">
+        <div class="title">
+          <h2>Object.preventExtensions()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+        seal, freeze özelliklerinde olduğu gibi bu özellikte te yeni değer eklenemez.
+        seal gibi var olan bir özelliğinin değeri değişlebilir 
+        preventExtensionsj diğerlerinden ayıran özelliği var olan bir değer silinebilir
+        </div>
+<pre><code>
+const product = {
+  name: "Fig",
+  price: 100
+}
+
+Object.preventExtensions(product)
+
+product.price = 120   // değişir
+product.stock = 50    // eklenmez
+delete product.name   // silinir
+
+console.log(product)  
+</code></pre>
+      </div>
+
+      <!-- Object.getPrototypeOf() -->
+      <div class="box">
+        <div class="title">
+          <h2>Object.getPrototypeOf()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+        buna sonra bak
+        </div>
+<pre><code>
+
+</code></pre>
+      </div>
+
+      <!--Object.create()-->
+      <div class="box">
+        <div class="title">
+          <h2>Object.create()</h2>
+          <span class="badge">ES5</span>
+        </div>
+        <div class="desc">
+        Buna sonra bak
+        </div>
+<pre><code>
+
+</code></pre>
+      </div>
+
+    </section>
+
+    <h1>ES6 (ECMAScript 2015) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+      <!--  Arrow Function -->
+      <div class="box">
+        <div class="title">
+          <h2>Arrow Function (=>)</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Arrow function, fonksiyonları daha kısa yazmanı sağlar.
+          <ul>
+            <li>Tek satırda işlem yapıyorsan <b>return</b> yazmadan döndürebilirsin.</li>
+            <li>Callback yazarken (map/filter gibi) çok pratik olur.</li>
+            <li>Arrow function tanımlandığı satırdan sonra kullanılabilinir. Tanımlandığın yerden önceki satırlarda kullanılamaz</li>
+          </ul>
+        </div>
+
+        <pre><code>// Normal function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function
+const add2 = (a, b) => a + b;
+
+console.log(add(2, 3));   // 5
+console.log(add2(2, 3));  // 5
+
+//Not eğer arrow funciton içersindeki işlem tek bir 
+//satırlık işlem ise aşşağıdaki gibi kısaltılarak kullanılabilinir.
+
+const add3 = (sayi1, sayi2) => sayi1 + sayi2
+console.log(add3(2, 3));  // 5
+</code></pre>
+      </div>
+
+      <!-- Tempalete Literals  -->
+      <div class="box">
+        <div class="title">
+          <h2>Tempalete Literals  </h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          " " + " "gibi kullanım yerine getirilmiş bir özelliktir. `${ }`  
+        </div>
+<pre><code>
+const birim_fiyat = 300;
+const adet = 3;
+const para_birimi = "TL";
+
+const toplam_tutar = `Toplam ${birim_fiyat * adet} ${para_birimi}`;
+console.log(toplam_tutar); //Toplam 900 TL
+</code></pre>
+      </div>
+
+      <!-- Object Destructuring -->
+      <div class="box">
+        <div class="title">
+          <h2>Object Destructuring</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Destructuring ile obje içinden değerleri tek satırda alırsın.
+          <ul>
+            <li>JSON response, props gibi yerlerde kodu daha temiz yapar.</li>
+            <li>Tek tek <b>user.name</b>, <b>user.city</b> yazma derdini azaltır.</li>
+          </ul>
+        </div>
+<pre><code>
+const user = {
+  name: "Sergen",
+  city: "Istanbul",
+  age: 30
+};
+
+// Normal kullanım
+const name1 = user.name;
+const city1 = user.city;
+
+// Destructuring
+const { name, city } = user;
+
+console.log(name1, city1); // Sergen Istanbul
+console.log(name, city);   // Sergen Istanbul
+console.log(`Kullanıcı bilgileri ${name} ${city}`) //Kullanıcı bilgileri Sergen Istanbul
+</code></pre>
+      </div>
+
+      <!-- Array Destructuring -->
+      <div class="box">
+        <div class="title">
+          <h2>Array  Destructuring</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Destructuring ile Array içinden değerleri tek satırda alırsın.
+          <ul>
+            <li>JSON response, props gibi yerlerde kodu daha temiz yapar.</li>
+            <li>Diziler objedeki gibi key value şeklinde olmadığı için diznin ilk elemanı ilk değişkine ikinci elemanı ikinci değişkene atanır ve bu şekilde devam eder</li>
+          </ul>
+        </div>
+<pre><code>
+const sayilar = [1,2,3,4,5];
+const [bir, iki, uc, dort,bes] = sayilar;
+console.log(bir, iki,uc , dort, bes);  // 1 2 3 4 5
+
+</code></pre>
+      </div>
+
+      <!-- Shorthand Property Name  -->
+      <div class="box">
+        <div class="title">
+          <h2>Shorthand Property Name</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir objenin çalışma mantığı key ve value şeklindedir eğer value yani değer bir değişkenden geliyorsa ve bu değişken 
+key ile aynı isme sahipsa o zaman sadece key in yazılması yeterli olacaktır. es6 kendisi keyin karşısına 
+key ile aynı isme sahip olan değişkeni atayacaktır
+        </div>
+<pre><code>
+const isim = "Sergen";
+const yas = 26;
+
+// const data = {isim : isim , yas : yas} bi nevi bunun kısayolu gibi
+ const data = { isim , yas}
+ console.log(data); //{isim: 'Sergen', yas: 26}
+</code></pre>
+      </div>
+
+      <!-- Default Parameters  -->
+      <div class="box">
+        <div class="title">
+          <h2>Default Parameters</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Fonksiyon parametrelerine varsayılan değer atama.
+        </div>
+<pre><code>
+function selamla(isim = "Misafir") {
+  console.log(`Merhaba ${isim}`);
+}
+
+selamla()  //Merhaba Misafir
+
+</code></pre>
+      </div>
+
+
+      <!-- Spread Operator  -->
+      <div class="box">
+        <div class="title">
+          <h2>Spread Operator </h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+         JavaScript’te bir diziyi veya nesneyi parçalayarak içindeki elemanları tek tek kullanmamızı sağlar.
+        </div>
+<pre><code>
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4, 5];
+
+console.log(newNumbers); //1 2 3 4 5
+
+const user = {
+  name: "Sergen",
+  age: 30
+};
+
+const newUser = {
+  ...user,
+  city: "Istanbul"
+};
+console.log(newUser); // {name: 'Sergen', age: 30, city: 'Istanbul'}
+</code></pre>
+      </div>
+
+      <!--.find() -->
+      <div class="box">
+        <div class="title">
+          <h2>.find() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Dizide bir eleman bulmaya yarar. 
+          Eleman bulunduğu anda arama işlemi durdurur ve bulunan elemanı döndürür.
+          Aynı koşulları sağlayan başka bir eleman olması durumunda ilk bulunan eleman döndürülür.
+        </div>
+<pre><code>
+const urunler = [
+  { id: 1, name: "Kalem", fiyat: 5 },
+  { id: 2, name: "Defter", fiyat: 10 },
+  { id: 3, name: "Silgi", fiyat: 2 },
+  { id: 4, name: "Kalemtraş", fiyat: 7 },
+];
+
+let findResult = urunler.find((item)=>{
+    return item.fiyat > 5;
+});
+
+// bulduktan sonraya direk döngüyü durdurdu.
+console.log(findResult);
+</code></pre>
+      </div>
+
+
+      <!-- .findIndex() -->
+      <div class="box">
+        <div class="title">
+          <h2>.findIndex() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          findIndex() JavaScript’te bir dizide (array) belirli bir şartı sağlayan ilk elemanın indeksini bulmak için kullanılan bir metottur.
+          <ul>
+            <li>Verdiğin şartı sağlayan ilk elemanı bulur</li>
+            <li>O elemanın index numarasını döndürür</li>
+            <li>Eğer hiçbir eleman şartı sağlamazsa -1 döndürür</li>
+          </ul>
+        </div>
+<pre><code>
+const numbers = [10, 20, 30, 40];
+
+const index = numbers.findIndex(num => num === 30);
+
+console.log(index); //2
+</code></pre>
+      </div>
+      
+
+
+        <!-- .from()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.from() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+        
+        </div>
+<pre><code>
+// ya bunun çok bir espirisi yok çok takma
+</code></pre>
+      </div>
+
+
+      <!-- of()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.of() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Array.of() JavaScript’te yeni bir dizi oluşturmak için kullanılan bir metottur.
+          Verdiğin değerleri tek tek alır ve bir array içine koyar.
+        </div>
+<pre><code>
+let bb =  Array.of("a", "b", "c");
+console.log(bb); // ['a', 'b', 'c']
+</code></pre>
+      </div>
+
+
+      <!-- startsWith()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.startsWith() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir string'in belirli bir ifade ile başlayıp başlamadığını kontrol eder. True/False döner.
+        </div>
+<pre><code>
+let text = "JavaScript öğreniyorum";
+text.startsWith("Java"); //true
+
+//başlangıç index değeri verilebilinir.
+let text = "Merhaba Dünya";
+text.startsWith("Dünya", 8)
+</code></pre>
+      </div>
+
+
+      <!-- endsWith()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.endsWith() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir string'in belirli bir ifade ile bitip bitmediğini kontrol eder. True/False döner.
+        </div>
+<pre><code>
+let text = "JavaScript";
+text.endsWith("Script"); //true
+
+//2. parametre string'in kesileceği uzunluğu belirtir.
+//Java dan sonrasını kesti.
+text.endsWith("Java", 4); //true
+</code></pre>
+      </div>
+
+
+
+      <!-- .repeat()  -->
+      <div class="box">
+        <div class="title">
+          <h2>.repeat() Fonksiyonu</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir string'i belirtilen kadar tekrar eder.
+        </div>
+<pre><code>
+let text = "JS ";
+let bb =  text.repeat(3)
+console.log(bb); //JS JS JS 
+</code></pre>
+      </div>
+
+
+      <!-- Number.isNaN()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Number.isNaN()</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir değerin gerçekten NaN olup olmadığını kontrol eder.
+        </div>
+<pre><code>
+Number.isNaN(NaN)       // true
+Number.isNaN("abc")     // false
+Number.isNaN(10)        // false
+</code></pre>
+      </div>
+
+      <!-- Number.isInteger()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Number.isInteger()</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir değerin tam sayı olup olmadığını kontrol eder.
+        </div>
+<pre><code>
+Number.isInteger(10)     // true
+Number.isInteger(10.5)   // false
+Number.isInteger("10")   // false
+</code></pre>
+      </div>
+
+
+      <!-- Math.trunc()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Math.trunc()</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir sayının ondalık kısmını keser.
+        </div>
+<pre><code>
+Math.trunc(4.9)   // 4
+Math.trunc(4.1)   // 4
+Math.trunc(-4.9)  // -4
+</code></pre>
+      </div>
+
+
+
+      <!-- Math.sign()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Math.sign()</h2>
+          <span class="badge">ES6</span>
+        </div>
+        <div class="desc">
+          Bir sayının pozitif mi negatif mi olduğunu söyler.
+        </div>
+<pre><code>
+Math.sign(10)   // 1
+Math.sign(-10)  // -1
+Math.sign(0)    // 0
+</code></pre>
+      </div>
+
+
+
+
+    </section>
+
+    <h1>ES7 (ECMAScript 2016) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+
+      <!-- .includes()   -->
+      <div class="box">
+        <div class="title">
+          <h2> </h2>
+          <span class="badge">ES7</span>
+        </div>
+        <div class="desc">
+          Bir dizinin içinde bir eleman olup olmadığını kontrol etmek için kullanılır.
+          <ul>
+            <li>Bu özellik metinleri içinde kullanılabilinir</li>
+          </ul>
+        </div>
+<pre><code>
+const fruits = ["apple", "banana", "orange"];
+
+console.log(fruits.includes("banana"));  // true
+console.log(fruits.includes("grape")); // false
+
+let includesString = 'Bu bir deneme metni'
+let includesResult1 = includesString.includes('iki');
+let includesResult2 = includesString.includes('bir');
+
+console.log(includesResult1); // false yazar,cümle içerisinde iki yok.
+console.log(includesResult2); // true yazar, cümle içerisinde bir var.
+</code></pre>
+      </div>
+
+    </section>
+
+    <h1>ES8 (ECMAScript 2017) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+      <!--async / await -->
+    <div class="box">
+      <div class="title">
+        <h2>async / await </h2>
+        <span class="badge">ES6</span>
+      </div>
+      <div class="desc">
+        Asenkron işlemleri Promise kullanmadan daha okunabilir şekilde yazmayı sağlar.
+      </div>
+<pre><code>
+async function getData() {
+const response = await fetch("https://api.example.com/data");
+const data = await response.json();
+return data;
+}
+
+getData().then(data => console.log(data));
+</code></pre>
+    </div>
+
+    <!-- Object.values()  -->
+    <div class="box">
+      <div class="title">
+        <h2> Object.values() </h2>
+        <span class="badge">ES6</span>
+      </div>
+      <div class="desc">
+        Objede bulunan DEĞERleri dizi olarak döner.
+      </div>
+<pre><code>
+const insan = {ad: "Ali", yas: 25};
+console.log(Object.values(insan)); // ["Ali", 25]
+</code></pre>
+    </div>
+
+    
+    <!-- Object.entries()  -->
+    <div class="box">
+      <div class="title">
+        <h2>Object.entries() </h2>
+        <span class="badge">ES6</span>
+      </div>
+      <div class="desc">
+        Objeyi [key, value] çiftlerinden oluşan bir diziye çevirir.
+      </div>
+<pre><code>
+const insan = {ad: "Ali", yas: 25};
+console.log(Object.entries(insan)); // [["ad","Ali"], ["yas",25]]
+</code></pre>
+    </div>
+
+
+    
+    <!-- Object.getOwnPropertyDescriptors()  -->
+    <div class="box">
+      <div class="title">
+        <h2> Object.getOwnPropertyDescriptors() </h2>
+        <span class="badge">ES6</span>
+      </div>
+      <div class="desc">
+        Bir objenin property’lerine ait tüm açıklamaları (descriptor) döner.
+      </div>
+<pre><code>
+const obj = {a: 1};
+console.log(Object.getOwnPropertyDescriptors(obj));
+</code></pre>
+    </div>
+
+    <!-- String Padding (padStart, padEnd)  -->
+    <div class="box">
+      <div class="title">
+        <h2>String Padding (padStart, padEnd) </h2>
+        <span class="badge">ES6</span>
+      </div>
+      <div class="desc">
+        String’in başına (padStart) veya sonuna (padEnd) karakter ekler.
+      </div>
+<pre><code>
+console.log("5".padStart(3, "0")); // "005"
+console.log("5".padEnd(3, "0"));   // "500"
+</code></pre>
+    </div>
+    </section>
+
+    <h1>ES9 (ECMAScript 2018) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+        <!-- Asenkron Iteration (for-await-of)  -->
+      <div class="box">
+        <div class="title">
+          <h2> Asenkron Iteration (for-await-of) </h2>
+          <span class="badge">ES9</span>
+        </div>
+        <div class="desc">
+          async fonksiyonlardan dönen Promise içeren iterables üzerinde döngü yapmaya izin verir.
+        </div>
+<pre><code>
+async function* sayilar() {
+  yield Promise.resolve(1);
+  yield Promise.resolve(2);
+  yield Promise.resolve(3);
+}
+
+(async () => {
+  for await (let s of sayilar()) {
+    console.log(s); // 1, 2, 3
+  }
+})();
+</code></pre>
+      </div>
+
+      <!-- Rest / Spread Properties for Objects  -->
+      <div class="box">
+        <div class="title">
+          <h2>Rest / Spread Properties for Objects </h2>
+          <span class="badge">ES9</span>
+        </div>
+        <div class="desc">
+          Artık objeler için de rest (...rest) ve spread (...spread) kullanılabiliyor.
+        </div>
+<pre><code>
+const kisi = {ad: "Ali", yas: 25, sehir: "İzmir"};
+const {yas, ...geriKalan} = kisi;
+
+console.log(yas);         // 25
+console.log(geriKalan);   // {ad: "Ali", sehir: "İzmir"}
+
+const yeniKisi = {...kisi, meslek: "Mühendis"};
+console.log(yeniKisi);    // {ad: "Ali", yas: 25, sehir: "İzmir", meslek: "Mühendis"}
+</code></pre>
+      </div>
+
+      <!-- . Promise.prototype.finally()  -->
+      <div class="box">
+        <div class="title">
+          <h2> Promise.prototype.finally() </h2>
+          <span class="badge">ES9</span>
+        </div>
+        <div class="desc">
+         then veya catch’ten bağımsız olarak her durumda çalışan bir blok ekler.
+        </div>
+<pre><code>
+fetch("https://jsonplaceholder.typicode.com/posts/1")
+  .then(res => res.json())
+  .catch(err => console.error("Hata:", err))
+  .finally(() => console.log("İşlem tamamlandı"));
+</code></pre>
+      </div>
+    </section>
+
+    <h1>ES10 (ECMAScript 2019) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+      <!--Array.prototype.flat()   -->
+      <div class="box">
+        <div class="title">
+          <h2>Array.prototype.flat()</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+         Çok boyutlu dizileri düzleştirir.
+        </div>
+<pre><code>
+const arr = [1, [2, [3, [4]]]];
+console.log(arr.flat());       // [1, 2, [3, [4]]]
+console.log(arr.flat(2));      // [1, 2, 3, [4]]
+console.log(arr.flat(Infinity)); // [1, 2, 3, 4]
+</code></pre>
+      </div>
+
+
+
+      <!-- Array.prototype.flatMap()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Array.prototype.flatMap()</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+          Hem map() hem de flat() işlemini aynı anda yapar.
+        </div>
+<pre><code>
+const arr = [1, 2, 3];
+console.log(arr.flatMap(x => [x, x * 2])); // [1, 2, 2, 4, 3, 6]
+</code></pre>
+      </div>
+
+      <!-- Object.fromEntries()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Object.fromEntries()</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+          Object.entries()’in tersidir. [key, value] çiftlerinden obje oluşturur.
+        </div>
+<pre><code>
+const entries = [["ad", "Ali"], ["yas", 25]];
+console.log(Object.fromEntries(entries)); // {ad: "Ali", yas: 25}
+</code></pre>
+      </div>
+
+
+      <!-- String.prototype.trimStart() / trimEnd()  -->
+      <div class="box">
+        <div class="title">
+          <h2>String.prototype.trimStart() / trimEnd()</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+          String’in başındaki (trimStart) veya sonundaki (trimEnd) boşlukları siler.
+        </div>
+<pre><code>
+console.log("   Merhaba".trimStart()); // "Merhaba"
+console.log("Merhaba   ".trimEnd());   // "Merhaba"
+</code></pre>
+      </div>
+
+      <!-- Optional Catch Binding  -->
+      <div class="box">
+        <div class="title">
+          <h2>Optional Catch Binding</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+          catch bloğunda hata parametresini yazmak zorunlu değil.
+        </div>
+<pre><code>
+try {
+  throw new Error("Hata!");
+} catch {
+  console.log("Hata yakalandı");
+}
+</code></pre>
+      </div>
+
+      <!-- Function.prototype.toString()  -->
+      <div class="box">
+        <div class="title">
+          <h2>Function.prototype.toString()</h2>
+          <span class="badge">ES10</span>
+        </div>
+        <div class="desc">
+          Artık fonksiyonun tam kaynak kodunu döner (önceden formatlama kaybolabiliyordu).
+        </div>
+<pre><code>
+function test(a, b) {
+  return a + b;
+}
+console.log(test.toString());
+</code></pre>
+      </div>
+
+    </section>
+
+    <h1>ES11 (ECMAScript 2022) ile Gelen JavaScript Özellikleri</h1>
+    <section class="lesson">
+      <!-- structuredClone()  -->
+      <div class="box">
+        <div class="title">
+          <h2>structuredClone() </h2>
+          <span class="badge">ES11</span>
+        </div>
+        <div class="desc">
+          JavaScript’te structuredClone(), bir objenin tam kopyasını (deep copy) oluşturmak için kullanılan yerleşik bir fonksiyondur.
+          <ul>
+            <li>Orijinal nesnenin tüm iç yapısını yeni bir nesneye kopyalar</li>
+            <li>İç içe (nested) objeler ve array’ler aynı referansı paylaşmaz</li>
+            <li>Tamamen bağımsız bir kopya oluşur</li>
+          </ul>
+          Bu yüzden deep copy yapmak için kullanılan modern ve güvenli yöntemlerden biridir.
+        </div>
+<pre><code>
+const user = {
+  name: "Sergen",
+  address: {
+    city: "Istanbul"
+  }
+}
+
+const copy = structuredClone(user);
+
+copy.address.city = "Ankara";
+
+console.log(user.address.city); //Istanbul
+</code></pre>
+      </div>
+
+
+      <!--  ?. Optional Chaining  -->
+      <div class="box">
+        <div class="title">
+          <h2> ?. Optional Chaining </h2>
+          <span class="badge">ES11</span>
+        </div>
+        <div class="desc">
+          Bir objenin içinde derin property'lere güvenli şekilde erişmeni sağlar.
+          <ul>
+            <li>Eğer bu değer varsa devam et, yoksa undefined dön</li>
+          </ul>
+          Bu yüzden deep copy yapmak için kullanılan modern ve güvenli yöntemlerden biridir.
+        </div>
+<pre><code>
+  let tySelecTableResult = {
+    paymentMethod: ["CC_ONLINE"],
+    SAVE_CREDIT_CARD: [2]
+  }
+
+  const securePaymentCheckboxDisabled = !!tySelecTableResult?.SAVE_CREDIT_CARD?.length;
+    // varsa length al, yoksa undefined döndür
+  //!! iki kez ters çevirme demektir.
+  console.log(![])  //false
+  console.log(!![]) //true
+
+  const user = null;
+  console.log(user.name); // ❌ Hata verir (Cannot read property)
+  console.log(user?.name); // ✅ undefined döner, hata vermez
+</code></pre>
+      </div>
+
+       <!--?? Nullish Coalescing Operator -->
+      <div class="box">
+        <div class="title">
+          <h2>?? Nullish Coalescing Operator</h2>
+          <span class="badge">ES11</span>
+        </div>
+        <div class="desc">
+          Sadece null veya undefined olduğunda sağdaki değeri verir.
+          <ul>
+            <li>Soldaki değer sadece null veya undefined ise sağdakini verir.</li>
+          </ul>
+        </div>
+<pre><code>
+const value = null ?? "default";
+
+console.log(value); // "default"
+
+//Sadece null ve undefined yakalar:
+0 ?? 10        // 0
+"" ?? "test"   // ""
+false ?? true  // false
+null ?? "x"    // "x"
+undefined ?? "x" // "x"
+[] ?? "x" // "[]
+</code></pre>
+      </div>
+
+
+      <!--|| Logical OR operatörü -->
+      <div class="box">
+        <div class="title">
+          <h2>|| Logical OR operatörü</h2>
+          <span class="badge">ES11</span>
+        </div>
+        <div class="desc">
+          Soldaki değer falsy ise sağdakini verir.
+          <ul>
+            <li>Bir değer yoksa yerine genel bir varsayılan vermek için kullanılır.</li>
+          </ul>
+        </div>
+<pre><code>
+const securePaymentCheckboxDisabled = tySelecTableResult.SAVE_CREDIT_CARD || false;
+
+ const result = a || b;
+
+// a truthy ise → a
+// a falsy ise → b
+
+//falsy değerler aşşağıdaki gibidir
+false, 0, "", null, undefined, NaN
+
+console.log(0 || 10);          // 10
+console.log("" || "merhaba");  // "merhaba"
+console.log(false || true);    // true
+console.log("abc" || "test");  // "abc"
+</code></pre>
+      </div>
+
+      <!-- -->
+      <div class="box">
+        <div class="title">
+          <h2></h2>
+          <span class="badge">ES11</span>
+        </div>
+        <div class="desc">
+          
+          <ul>
+            <li></li>
+          </ul>
+        </div>
+<pre><code>
+ 
+</code></pre>
+      </div>
+
+
+    </section>
+  </div>
+</body>
+</html>
+
+<script>
+const data = {
+  DNZ: "Denizbank Sanal POS",
+  ISB: "İş Bankası Sanal POS",
+  MCK: "Test Sanal POS",
+  NON_ONLINE: "Online Olmayan",
+  ONLINE: "Online"
+};
+
+const arr = Object.entries(data).map(([key, value]) => ({
+  name: value,
+  value: key
+}));
+
+console.log(data);
+console.log(arr);
+
+
+/* manuel hata üretir ve bir alt satıra geçmez */
+/* console.log('1111111111');
+throw new Error("Patladı");
+console.log('222222222') */
+</script>
+<style>
+  body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f6f7fb;
+    color:#222;
+}
+ 
+.container{
+    max-width:1100px;
+    margin:16px auto;
+    padding:0 16px;
+}
+h1{
+    margin-top: 55px;
+    text-align: center;
+}
+/* Basit iki kolon: sol kod, sağ açıklama */
+.lesson{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.box{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:12px;
+}
+
+.title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.title h2{
+    margin:0;
+    font-size:16px;
+}
+
+.badge{
+    font-size:12px;
+    padding:4px 8px;
+    border-radius:999px;
+    background:#eef2ff;
+    border:1px solid #c7d2fe;
+    color:#3730a3;
+    white-space:nowrap;
+}
+
+pre{
+    margin:0;
+    background:#0b1020;
+    color:#e5e7eb;
+    padding:12px;
+    border-radius:10px;
+    overflow:auto;
+    font-size:13px;
+    line-height:1.5;
+    margin-top: 10px;
+}
+
+.desc{
+    font-size:14px;
+    line-height:1.6;
+}
+
+.desc ul{
+    margin:8px 0 0 18px;
+    color:#444;
+}
+
+.desc li{ margin:6px 0; }
+ 
+
+/* Mobilde alt alta */
+@media (max-width: 900px){
+    .lesson{
+    grid-template-columns: 1fr;
+    }
+}
+</style>

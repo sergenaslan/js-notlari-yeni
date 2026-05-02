@@ -1,0 +1,451 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}.desc{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}hr{width: 100%;margin-bottom: 25px;}</style></head>
+<body>
+    <h1>mysql2 Kütüphanesi Çalışma Notları</h1>
+
+
+
+    <!-- mongoose.Schema() -->
+    <div class="box">
+    <h2>mongoose.Schema() Fonksiyonu</h2>
+    <div class="desc">
+      mongoose.Schema() fonksiyonu, bir collection içerisine kaydedilecek documentlerin field alanlarında tutulacak verilerin veri tiplerini, varsayılan değerlerini, zorunlu olup olmadığını ve çeşitli doğrulama (validation) kurallarını tanımlamamızı sağlayan bir document yapısı (şeması) oluşturmamızı sağlar.
+      mongoose.Schema({}) gerçek projelerde sadece alan ve tip tanımlamak için değil, veri güvenliği, doğrulama (validation), performans ve iş kuralları koymak için kullanılır.
+    </div>
+        <pre>
+<code>
+DATABASE → kapinda_kuruyemis
+COLLECTION → products
+DOCUMENT → { name: "İncir", price: 120 }
+FIELD → name / price
+
+ DATABASE                 DATABASE
+ └── COLLECTION            └── TABLE
+      └── DOCUMENT              └── ROW
+           └── FIELD                └── COLUMN
+</code>
+        </pre>
+    </div>
+
+    <!-- Schema Definition -->
+  <div class="box">
+    <h2>Schema Definition</h2>
+    <div class="desc">Bir document içindeki TÜM field’ların yapısını tanımlama işlemidir.</div>
+        <pre>
+<code>
+Schema = ev planı
+Field = odanın iç tasarımı
+
+// Burada yapılan işlem Schema Definition
+const productSchema = mongoose.Schema({
+  name: String,
+  price: Number,
+  stock: Number
+})
+// Veri Tipleri → String, Number, Boolean, Date, Array, ObjectId, Mixed, Buffer
+</code>
+        </pre>
+  </div>
+
+
+  <!-- Field Configuration -->
+  <div class="box">
+    <h2>Field Configuration</h2>
+    <div class="desc">Tek bir field’ın özelliklerini belirleme işlemidir.</div>
+        <pre>
+<code>
+const productSchema = new mongoose.Schema(
+{
+name: {
+  type: String,
+  required: true,   → zorunlu alan Bu alan olmadan kayıt yapılamaz
+  trim: true,       → boşlukları siler "   incir   "
+  minlength: 5,     → ürün adı 5 karakterden küçük olamaz
+  maxlength: 30,    → ürün adı 30 karakterden büyük olamaz
+  alias: "urunAdi"  → product.urunAdi şeklinde erişim sağlayabilmek için
+},
+slug: {
+  type: String,
+  lowercase: true,    → küçük harfe çevirir
+  unique: true,      → organik-incir //Slug genelde SEO için kullanılır
+  index: true,        → performans artırır
+},
+price: {
+  type: Number,
+  min: 0             → ürün fiyatı 0 az olamaz
+  max: 999          → ürün fiyatı 999 fazla olamaz
+  validate: {        → Custom validation yazılabilir:
+    validator: function(v) {
+      return v > 0;
+    },
+    message: "Fiyat 0'dan büyük olmalı"
+  },
+  set: v => Math.round(v)  → Veri kaydedilirken değiştirilebilir
+},
+tags: [   →tags alanı bir liste (array) olacak, ve listenin içindeki her eleman String olacak
+  {
+    type: String  →örnek => "tags": ["organik", "yerli", "dogal"]
+  }
+],
+stock: {
+  type: Number,
+  default: 0         → Varsayılan değer
+},
+category: {
+  type: String,
+  enum: ["kuruyemis", "paket"]  → sadece belirli değerler kabul edilir
+},
+createdBy: {
+  type: mongoose.Schema.Types.ObjectId, → User tablosundan gelecek
+  ref: "User"
+},
+updatedAt: {
+  timestamps: true      → Mongo otomatik ekler:
+},
+email: {
+  type: String,        →  match (regex doğrulama)
+  match: /.+\@.+\..+/
+},
+address: {
+ city: String,
+ district: String
+},
+password: {
+ type: String,      → Varsayılan olarak alanı gizler
+ select: false
+},
+createdAt: {
+ type: Date,      → Alan değiştirilemez olur
+ immutable: true,
+ timestamps: true
+}
+});
+</code>
+        </pre>
+  </div>
+
+
+    <!-- Profesyonel mongoose.Schema örneği -->
+  <div class="box">
+    <h2>Profesyonel mongoose.Schema örneği</h2>
+    <div class="desc"></div>
+        <pre>
+<code>
+const productSchema = new mongoose.Schema(
+{
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 2,
+    maxlength: 100
+  },
+
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true
+  },
+
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+
+  stock: {
+    type: Number,
+    default: 0
+  },
+
+  category: {
+    type: String,
+    enum: ["kuruyemis", "kuru-meyve", "lokum", "paket"],
+    required: true
+  },
+
+  imageUrl: {
+    type: String,
+    default: "/images/default.png"
+  },
+
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+
+  tags: [
+    {
+      type: String
+    }
+  ],
+
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+
+},
+{
+  timestamps: true
+}
+);
+
+const Product = mongoose.model("Product", productSchema);
+
+</code>
+        </pre>
+  </div>
+
+
+    <!-- Field Configuration index -->
+    <div class="box">
+    <h2>Field Configuration index</h2>
+    <div class="desc">Index, veritabanının arama yaparken tüm kayıtları taramak yerine hedef kayda hızlı ulaşmasını sağlar ve sorgu performansını artırır.</div>
+        <pre>
+<code>
+  Şu sorguyu çalıştırıyorsun:
+Product.find({ slug: "organik-incir" })
+
+Index yoksa MongoDB şöyle çalışır:full scan (tam tarama)
+1. ürüne bak
+2. ürüne bak
+3. ürüne bak
+...
+9999. ürüne bak
+
+Index varsa 
+
+index tablosuna bak
+→ organik-incir nerede?
+→ direkt git
+Hızlı ✅ tek adımda bulur
+
+günlük hayattan örnek => bir kelimeyi bulmak için bütün sayfalara bakmaktansa
+direk kelimenin geçtiği sayfayı açmaya benzer.
+projelerde genelde şu alanlara eklenir: slug, email, username, orderNumber, userId, createdAt,
+📘 Index ne zaman eklenmeli?
+sık aranan alanlar, unique alanlar, URL parametre alanları, foreign key benzeri alanlar (ObjectId)
+</code>
+        </pre>
+    </div>
+
+
+    <!--Schema Behavior (Document / Model davranışı)  -->
+  <div class="box">
+    <h2>Schema Behavior (Document / Model davranışı)</h2>
+    <div class="desc">Schema Behavior (Document / Model davranışı) </div>
+        <pre>
+<code>
+  buraya bişiler yazılanacak
+methods
+statics
+middleware (pre / post)
+virtual
+plugins
+</code>
+        </pre>
+  </div>
+
+
+
+    <!--schema.methods -->
+    <div class="box">
+    <h2>schema.methods </h2>
+    <div class="desc">schema.methods, document seviyesinde çalışan özel fonksiyonlar ekleyebilmemizi sağlar</div>
+        <pre>
+<code>
+//Shema tanımlama
+const productSchema = new mongoose.Schema({
+  name: String,
+  stock: Number
+});
+
+// Method ekleme
+productSchema.methods.isInStock = function() {
+  return this.stock > 0; //this o anki document’un stock değeri
+};
+
+// model
+const Product = mongoose.model("Product", productSchema);
+
+📘 Kullanım örneği
+//Database’ten ürün çekelim:
+const product = await Product.findOne();
+
+//Şimdi method kullanılır:
+product.isInStock();  //true-false
+
+-----------------------------------
+productSchema.methods.isAvailable = function() {
+ return this.stock > 0 && this.isActive;
+};
+
+if(product.isAvailable()) {
+ console.log("ürün satılabilir");
+}
+</code>
+        </pre>
+    </div>
+
+    <!-- Middleware -->
+  <div class="box">
+    <h2>Middleware</h2>
+    <div class="desc">belirli bir işlemden önce veya sonra otomatik çalışan fonksiyondur</div>
+    <pre>
+<code>
+save, validate, remove, deleteOne, updateOne, find, findOne, findOneAndUpdate 
+yukarıdaki işlemler esnasında eklenebilinir.
+1️⃣ pre Middleware
+schema.pre("save", function() {}) // İşlemden önce çalışır
+2️⃣ post middleware 
+schema.post("save", function() { console.log(log yazmak) }) // İşlemden sonra çalışır
+log yazmak, mail göndermek, notification göndermek, audit sistemi kurmak, cache temizlemek
+
+// save işleminden önce çalışır  document nasıl davranacak?
+productSchema.pre("save", function(next) {
+ this.slug = this.name
+  .toLowerCase()
+  .replaceAll(" ", "-");
+ next();
+});
+
+userSchema.pre("save", function(next) {
+ this.password = hash(this.password);
+ next();
+});
+
+productSchema.post("save", function(doc) {
+ console.log("Ürün kaydedildi:", doc.name); 
+});
+
+orderSchema.post("save", function(order) {
+ sendSMS(order.phone);
+});
+
+</code>
+        </pre>
+  </div>
+
+      <!-- schema.statics -->
+  <div class="box">
+    <h2>schema.statics</h2>
+    <div class="desc">schema.statics, mongoose modeline özel fonksiyon eklemek için kullanılır. tek bir kayıt üzerinde değil, koleksiyonun tamamı üzerinde çalışan fonksiyonlardır.</div>
+        <pre>
+<code>
+// schema.statics, mongoose modeline özel fonksiyon eklemek için kullanılır.
+
+//Schema:
+const productSchema = new mongoose.Schema({
+ name: String,
+ stock: Number,
+ isActive: Boolean
+});
+
+//statics ekleyelim:
+productSchema.statics.findAvailableProducts = function() {
+
+ return this.find({    //this burada modeli temsil eder.
+  stock: { $gt: 0 },
+  isActive: true
+ });
+};
+//model
+const Product = mongoose.model("Product", productSchema);
+
+//kullanım
+const products = await Product.findAvailableProducts(); //stokta olan ve aktif ürünler gelir.
+
+tüm aktif siparişler getirme
+const orderSchema = new mongoose.Schema({
+ orderNumber: String,
+ orderStatus: String,
+ totalAmount: Number
+});
+
+orderSchema.statics.findActiveOrders = function() {
+ return this.find({
+  orderStatus: "active"
+ });
+};
+
+const Order = mongoose.model("Order", orderSchema);
+const activeOrders = await Order.findActiveOrders();  tüm aktif siparişler gelir
+</code>
+        </pre>
+  </div>
+
+    <!-- virtual field -->
+  <div class="box">
+    <h2>virtual field (database’e kaydolmaz)</h2>
+    <div class="desc">database’e yazmadan hesaplanan alan üretmek</div>
+        <pre>
+<code>
+fullName üretmek, slug üretmek, KDV dahil fiyat hesaplamak, stok durumu göstermek, URL üretmek
+ 
+ const productSchema = new mongoose.Schema({
+ name: String,
+ price: Number
+});
+
+productSchema.virtual("priceWithTax").get(function () {
+ return this.price * 1.20;
+});
+
+const product = await Product.findOne(); bu esnada product.priceWithTax çalıştı 
+product.priceWithTax şekliden veri kullanılabilinilr.
+ 
+</code>
+        </pre>
+  </div>
+
+
+
+  <!-- productSchema.plugin() -->
+  <div class="box">
+    <h2>productSchema.plugin()</h2>
+    <div class="desc">plugin, mongoose schema’ya tekrar kullanılabilir özellikler eklemek için kullanılan genişletme yapısıdır.</div>
+    <pre>
+<code>
+plugin, schema’ya hazır özellikler ekleyen tekrar kullanılabilir modüllerdir.
+
+function slugPlugin(schema) {
+
+ schema.pre("save", function(next) {
+
+  this.slug = this.name
+   .toLowerCase()
+   .replaceAll(" ", "-");
+
+  next();
+
+ });
+
+}
+
+productSchema.plugin(slugPlugin);  otomatik slug üretir
+
+</code>
+        </pre>
+  </div>
+
+<hr>
+
+
+  <!--  -->
+  <div class="box">
+    <h2></h2>
+    <div class="desc"></div>
+        <pre>
+<code>
+
+
+</code>
+        </pre>
+  </div>
+
+</body>
+</html>
+<script>
+ 
+</script>

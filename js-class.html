@@ -1,0 +1,316 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}.desc{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}.box.gen{width:100%;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>js class özelliği</h1>
+      <!-- constructor -->
+  <div class="box gen">
+    <p>Instance = new anahtar kelimesiyle bir sınıftan (veya constructor fonksiyondan) türetilmiş nesneye denir</p>
+  </div>
+  <!--  Sınıf Tanımı  -->
+  <div class="box">
+    <h2>1. Sınıf Tanımı (Class Declaration / Expression)</h2>
+<pre><code>
+// Declaration
+// ✅ Declaration kullan:
+// - Basit, tek bir sınıf tanımı
+// - Kodun başında net bir şekilde görünmesini istiyorsan
+class Araba {
+  constructor(marka, model) {
+    this.marka = marka;
+    this.model = model;
+  }
+}
+
+// Expression
+// ✅ Expression kullan:
+// - Koşullu/opsiyonel sınıflar
+// - Factory function'lar
+// - Tek kullanımlık/anonim sınıflar
+// - Higher-order function'larda
+const Hayvan = class {
+  constructor(tur) {
+    this.tur = tur;
+  }
+};
+
+</code></pre>
+  </div>
+
+
+  
+  <!-- constructor -->
+  <div class="box">
+    <h2>2. constructor Metodu</h2>
+    <div class="desc">
+      Sınıftan new ile nesne oluşturulduğunda ilk çalışan metottur. Nesne özelliklerini başlatmak için kullanılır.
+    </div>
+<pre><code>
+
+class Kisi {
+  constructor(isim, yas) {
+    this.isim = isim;   // özellik (property)
+    this.yas = yas;
+  }
+}
+
+</code></pre>
+  </div>
+
+
+  
+  <!-- Properties  -->
+  <div class="box">
+    <h2>3. Özellikler (Properties)</h2>
+    <div class="desc">
+      Instance Properties: this üzerinden tanımlanır, her nesneye özgüdür.<br>
+      Class Fields (ES2022+): Doğrudan sınıf gövdesinde tanımlanabilir.
+    </div>
+<pre><code>
+class Ornek {
+  alan1 = "varsayılan";         // public instance field
+  static alan2 = "statik";      // static field
+  #ozelAlan = "private";        // private field (ES2022)
+}
+</code></pre>
+<h2>1. Instance Field (Örnek Alanı) Nedir?</h2>
+<div class="desc">
+  Instance field, sınıftan new ile oluşturulan her bir nesneye ait olan alandır. Her nesne bu alanın kendi kopyasını taşır.
+  Oluşturulan her bir nesne bu değişken üzerinde farklı veriler tutabilir.
+</div>
+<pre><code>
+class Ornek {
+  alan1 = "varsayılan";  // instance field
+}
+
+const nesne1 = new Ornek();
+const nesne2 = new Ornek();
+
+nesne1.alan1 = "değişti";
+console.log(nesne1.alan1); // "değişti"
+console.log(nesne2.alan1); // "varsayılan" (hala ilk değerinde)
+
+</code></pre>
+<strong>Özellikler:</strong>
+<ol>
+  <li>Her nesne kendine ait bir kopyaya sahiptir.</li>
+  <li>Bir nesnedeki değişiklik diğer nesneleri etkilemez.</li>
+  <li>Nesne oluşturulurken her bir instance için ayrı ayrı bellekte yer kaplar.</li>
+  <li>this üzerinden erişilir.</li>
+</ol>
+<h2>2. Static Field (Statik Alan) Nedir?</h2>
+<div class="desc">Static field, sınıfın kendisine ait olan alandır. Tüm nesneler tek bir kopyayı paylaşır. Sınıf üzerinden erişilir, nesne üzerinden erişilemez.</div>
+<pre><code>
+
+class Ornek {
+  static alan2 = "statik";  // static field
+}
+
+console.log(Ornek.alan2);   // "statik" (sınıf üzerinden erişim)
+
+const nesne = new Ornek();
+console.log(nesne.alan2);   // undefined (nesne üzerinden erişilemez!)
+
+</code></pre>
+<strong>Özellikler:</strong>
+<ul>
+  <li>Sınıfın kendisine aittir, nesnelere değil.</li>
+  <li>Tüm nesneler paylaşır (tek bir kopya).</li>
+  <li>Bir yerde değiştirilirse, her yerden değişmiş hali görünür.</li>
+  <li>Bellekte sadece tek bir kopya bulunur.</li>
+  <li>Erişim: SınıfAdi.statikAlan şeklindedir.</li>
+</ul>
+<h2>2.private field</h2>
+ Private field (#ozelAlan), davranış olarak instance field gibi davranır, ancak erişim kontrolü eklenmiş halidir. Yani:
+  <ul>
+    <li>Instance özelliği: Her nesnenin kendi kopyası vardır.</li> 
+    <li>Static özelliği DEĞİL: Sınıfa ait değildir, nesnelere aittir.</li> 
+    <li>Private: Sadece sınıfın içinden erişilebilir, dışarıdan erişilemez.</li> 
+  </ul>
+
+  </div>
+
+<!-- Metotlar -->
+  <div class="box">
+    <h2>4. Metotlar (Methods)</h2>
+    <div class="desc">
+      Bir sınıfın (class) içinde tanımlanan <strong>function</strong> anahtar kelimesi kullanılmadan yazılan
+      fonksiyonlara "method" (metot) denir.
+      <ul>
+        <li>Bir nesnenin (object) yapabileceği işlemlerdir.</li>
+        <li>Sınıfın davranışlarını (behavior) tanımlar.</li>
+        <li>JavaScript'te sınıf içinde function anahtar kelimesi kullanılmadan yazılır.</li>
+        <li>aşşağıdaki örnek bir <strong></strong></li>
+      </ul>
+    </div>
+    <h2>Instance Methodudur</h2>
+     <div class="desc">
+      Prototip üzerinde bulunur, tüm nesneler ortak kullanır. INSTANCE METHODLAR sadece instance nesneler üzerinde çalışır 
+      class üzerinde çalışmaz
+
+     </div>
+<pre><code>
+class Araba {
+  constructor(marka, model) {
+    this.marka = marka;
+    this.model = model;
+  }
+  
+  // İŞTE BUNLAR METOT (method) ↓
+  calistir() {
+    console.log(`${this.marka} ${this.model} çalıştı.`);
+  }
+  
+  dur() {
+    console.log(`${this.marka} ${this.model} durdu.`);
+  }
+}
+
+const benimArabam = new Araba("BMW", "3.20");
+benimArabam.calistir();  // "BMW 3.20 çalıştı." (calistir metodu çağrıldı)
+benimArabam.dur();       // "BMW 3.20 durdu."     (dur metodu çağrıldı)
+</code></pre>
+<h2>Static Metotlar</h2>
+<div class="desc">Sınıfın kendisine aittir, nesne üzerinden çağrılamaz (örneğin Array.from() gibi).</div>
+<pre><code>
+class Matematik {
+  static topla(a, b) {
+    return a + b;
+  }
+}
+Matematik.topla(3, 5); // 8
+</code></pre>
+<h2>Private Metotlar (#)</h2>
+<div class="desc">Sadece sınıf içinden erişilebilir.</div>
+<pre><code>
+class Gizli {
+  #sifreliMetot() {
+    return "gizli";
+  }
+  acikMetot() {
+    return this.#sifreliMetot();
+  }
+} 
+let bb = new Gizli();  // Önce nesne oluştur
+console.log(bb.acikMetot());  // ✅ "gizllli"
+
+</code></pre>
+  </div>
+
+
+
+  <!-- Getter ve Setter -->
+  <div class="box">
+    <h2>5. Getter ve Setter</h2>
+    <h2>1. Getter (get) Nedir?</h2>
+    <div class="desc">
+      Bir özelliğin değerini okurken otomatik çalışan metottur. Sanki normal bir özellikmiş gibi nesne.özellik yazarsınız, ama aslında bir fonksiyon çalışır.
+      get ile tanımlanmış fonskiyonları özellikmiş gibi kullanabilmemizi sağlar.
+    </div>
+<pre><code>
+class Kisi {
+  constructor(ad, soyad) {
+    this.ad = ad;
+    this.soyad = soyad;
+  }
+  
+  // Getter - tamAd okunduğunda bu çalışır
+  get tamAd() {
+    return `${this.ad} ${this.soyad}`;
+  }
+}
+
+const k = new Kisi("Efsun", "Can");
+//Burada tamAd bir metot gibi görünmez; sanki bir property’ymiş gibi çağrılır.
+console.log(k.tamAd); // Efsun Can  (parantez yok! normal özellik gibi)
+
+</code></pre>
+  <h2>2. Setter (set) Nedir?</h2>
+  <div class="desc">
+    Instance içerisindeki özelliğe değer atarken ekstra validasyon veya veri manipülasyonu yapmak istediğimizde çalışacak, property gibi kullanılan (aslında set ile tanımlanmış) fonksiyonlar yazmak için kullanılır.
+  </div>
+  <pre><code>
+class Daire {
+  constructor(yaricap) {
+    this._yaricap = yaricap;  // _ ile özel olduğunu belirtiriz (gelenek)
+  }
+  
+  // Getter
+  get yaricap() {
+    return this._yaricap;
+  }
+  
+  // Setter
+  set yaricap(yeniDeger) {
+    if (yeniDeger > 0) {
+      this._yaricap = yeniDeger;
+    } else {
+      console.log("Yarıçap pozitif olmalı!");
+    }
+  }
+  
+  get alan() {
+    return Math.PI * this._yaricap ** 2;
+  }
+}
+
+const d = new Daire(5);
+console.log(d.yaricap); // 5 (getter çalışır)
+d.yaricap = -3;         // setter çalışır: "Yarıçap pozitif olmalı!"
+d.yaricap = 10;         // setter çalışır, değer değişir
+console.log(d.alan);    // 314.159...
+
+</code></pre>
+  </div>
+
+
+
+  <!-- Kalıtım (extends, super) -->
+  <div class="box">
+    <h2>6. Kalıtım (extends, super)</h2>
+    <div class="desc">Başka bir sınıftan türeyebilir.</div>
+<pre><code>
+class Hayvan {
+  constructor(isim) {
+    this.isim = isim;
+  }
+  sesCikar() {
+    return `${this.isim} ses çıkarıyor.`;
+  }
+}
+
+class Kopek extends Hayvan {
+  constructor(isim, cins) {
+    super(isim); // üst sınıfın constructor'ını çağırır
+    this.cins = cins;
+  }
+  sesCikar() {
+    return `${super.sesCikar()} Hav hav!`; // super ile üst metoda erişim
+  }
+}
+</code></pre>
+  </div>
+
+
+  <!-- instanceof Operatörü -->
+  <div class="box">
+    <h2>7. instanceof Operatörü</h2>
+    <div class="desc"> Bir nesnenin belirli bir sınıfın örneği olup olmadığını kontrol eder. </div>
+<pre><code>
+const k = new Kopek("Karabaş", " Kangal");
+console.log(k instanceof Kopek);  // true
+console.log(k instanceof Hayvan); // true
+</code></pre>
+  </div>
+
+    <!--Sınıflar Hoist Edilmez -->
+  <div class="box">
+    <h2>8. Sınıflar Hoist Edilmez</h2>
+    <div class="desc">Fonksiyonların aksine, sınıf tanımları yukarı taşınmaz (hoisting olmaz). Bu nedenle sınıfı kullanmadan önce tanımlanmış olmalıdır.  </div>
+<pre><code>
+// Hatalı: Cannot access 'YeniSinif' before initialization
+const nesne = new YeniSinif(); 
+class YeniSinif {}
+</code></pre>
+  </div>
+
+</body>
+</html>
