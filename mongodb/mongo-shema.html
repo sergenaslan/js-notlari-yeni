@@ -444,6 +444,27 @@ productSchema.plugin(slugPlugin);  otomatik slug üretir
         </pre>
   </div>
 
+  <!--  -->
+  <div class="box">
+    <h2>Schema'nın kendi (instance) metodları</h2>
+    <div class="desc"></div>
+        <pre>
+<code>
+schema.add()          // yeni alan ekler
+schema.methods        // instance method tanımlarsın
+schema.statics        // static method tanımlarsın
+schema.pre()          // middleware (hook)
+schema.post()         // middleware
+schema.path()         // field bilgisine erişir
+schema.index()        // index tanımlar
+schema.virtual()      // virtual field tanımlar
+schema.set()          // ayar yapar
+schema.get()          // ayar alır
+
+</code>
+        </pre>
+  </div>
+
 </body>
 </html>
 <script>
