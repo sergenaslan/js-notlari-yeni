@@ -1,0 +1,53 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1></h1>
+
+  <!-- mongoose.model() -->
+  <div class="box">
+    <h2>mongoose.model()</h2>
+    <p>model fonskiyonu shemayada bakarak 1. parametredeki isimle bir class oluşturur</p>
+    <p>User adında bir class (constructor function) oluşturur</p>
+    <ul>
+      <li>MongoDB’deki users collection’ına bağlıdır</li>
+      <li>İçinde schema kuralları vardır</li>
+      <li>Static + instance methodları vardır </li>
+    </ul>
+<pre><code>
+const User = mongoose.model("User", schema);
+
+Yani zihninde şöyle canlandır:
+class User {
+  constructor(data) {
+    // schema’ya göre data’yı işler
+  }
+
+  save() {}
+  static find() {}
+}
+</code></pre>
+  </div>
+
+
+  <!-- Instance Oluşturma -->
+  <div class="box">
+    <h2>Instance Oluşturma</h2>
+    <p>yan taraftaki kod ile oluşturulan class tandan bir instance aşşağıdaki gibi oluşturulur.</p>
+    <p>User class’ından bir instance (document) oluşturuyorsun</p>
+<pre><code>
+const user = new User({ name: "Sergen" });
+
+</code></pre>
+  </div>
+
+
+    <!--  -->
+  <div class="box">
+    <h2></h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+</body>
+</html>
