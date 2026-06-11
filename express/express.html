@@ -1,0 +1,103 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>Express Kütüphanesi</h1>
+
+  <!-- 1. Express neden var?  -->
+  <div class="box">
+    <h2>1. Express neden var?</h2>
+    <p>Önce bunu anlayacağız. Node tek başına HTTP server açabiliyor:</p>
+<pre><code>
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.end('Merhaba');
+});
+
+server.listen(3000);
+</code></pre>
+<p>Bu çalışır. Ama problem:</p>
+<ul>
+  <li>routing yok</li>
+  <li>middleware yok</li>
+  <li>body parsing zor</li>
+  <li>query parsing uğraştırır</li>
+  <li>error handling dağınık</li>
+  <li>kod büyüdükçe kaos</li>
+</ul>
+<p>
+  Express bunun üzerine abstraction koyar.Yani: Node HTTP modülünün daha kullanışlı hali.
+</p>
+  </div>
+
+  <!-- app objesi nedir? -->
+  <div class="box">
+    <h2>app objesi nedir?</h2>
+    <p></p>
+<pre><code>
+const app = express();
+</code></pre>
+<p>ne döndürüyor? Bunu açacağız. Neler var:</p>
+<pre><code>
+app.use()
+app.listen()
+
+app.get()
+app.post()
+app.put()
+app.patch()
+app.delete()
+app.all()
+
+app.route()
+app.param()
+
+app.set()
+app.get(setting)
+app.enable()
+app.disable()
+
+</code></pre>
+  </div>
+
+
+  <!--  -->
+  <div class="box">
+    <h2></h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+<script>
+/* 
+Request objesi (req)
+req.params
+req.query
+req.body
+req.headers
+req.method
+req.path
+req.url
+req.ip
+req.cookies
+
+Response objesi (res)
+res.send()
+res.json()
+res.status()
+res.end()
+res.redirect()
+res.set()
+res.download()
+
+*/
+</script>
