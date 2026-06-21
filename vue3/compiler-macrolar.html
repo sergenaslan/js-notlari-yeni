@@ -1,24 +1,80 @@
 <html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
 <body>
-    <h1></h1>
 
-  <!-- vue2 syntaxt vue3 sytaxt  -->
+  <!-- defineProps -->
   <div class="box">
-    <h2>vue2 syntaxt vue3 sytaxt</h2>
-    <p></p>
+    <h2>defineProps</h2>
+    <p>defineProps() aslında Vue 2'deki props tanımının Vue 3 &lt;script setup> içindeki karşılığıdır.</p>
+    <ul>
+      <li>
+        defineProps() → Parent'ten gelen verileri tanımlar.
+      </li>
+      <li>
+        Sadece &lt;script setup> içinde kullanılır.
+      </li>
+      <li>
+        Reactive'dir.
+      </li>
+      <li>
+        Child component props'u okuyabilir ama değiştiremez.
+      </li>
+      <li>
+        Vue 2'deki props:{} yapısının Vue 3 Composition API karşılığıdır.
+      </li>
+    </ul>
 <pre><code>
+&lt;script setup>
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  }
+  age: Number,
+  isAdmin: {
+    type: Boolen,
+    default: false
+  }
+})
 
+&lt;/script setup>
 
+&lt;UserCard
+  name="Sergen"
+  :age="30"
+  :is-admin="true"
+/>
+
+Template tarafında kebab-case, JavaScript tarafında camelCase kullanılır. is-admin _> isAdmin
 </code></pre>
   </div>
 
 
-  <!--  -->
+  <!--defineEmits  -->
   <div class="box">
-    <h2></h2>
-    <p></p>
+    <h2>defineEmits</h2>
+    <p>defineEmits aslında Vue 2'deki $emit kullanımının Composition API tarafındaki tanımlama şeklidir.</p>
 <pre><code>
+  --temel kullanım
+&lt;script setup>
+const emit = defineEmits(['save'])
 
+function save() {
+  emit('save')
+}
+&lt;/script>
+
+&lt;script setup>
+
+const emit = defineEmits(['save'])
+
+const saveUser = () => {
+  emit('save', {
+    id: 1,
+    name: 'Sergen'
+  })
+}
+
+&lt;/script>
 
 </code></pre>
   </div>
