@@ -7,14 +7,25 @@
     <h2>vue2 syntaxt vue3 sytaxt</h2>
     <p></p>
 <pre><code>
+  vue2 sytaxt
 
+  export default {
+    data() {},
+    methods: {},
+    computed: {}
+  }
 
 </code></pre>
 
-
 <pre><code>
+vue3 sytaxt
 
+import { ref } from 'vue'
 
+const count = ref(0)
+function increment() {
+  count.value++
+}
 </code></pre>
   </div>
 
@@ -40,6 +51,142 @@
 </code></pre>
   </div>
 
+</code></pre>
+  </div>
+
+
+  <!-- reactive -->
+  <div class="box">
+    <h2>reactive</h2>
+    <p>Bir nesneyi (object, array, Map, Set) reaktif hale getirmek için kullanılır.</p>
+    <p> reactive değişkenin değeri değiştiğinde Vue bunu takip eder ve ilgili component yeniden render edilir.</p>
+<pre><code>
+ &lt;script setup>
+import { reactive } from 'vue'
+
+const user = reactive({
+  name: 'Sergen',
+  age: 30
+})
+
+function changeName() {
+  user.name = 'Aytaç'
+}
+
+&lt;/script>
+
+&lt;template>
+  &lt;h1> {{user.name }} &lt;/h1>
+  &lt;button @click="changeName">İsmi Değişitir&lt;/button>
+&lt;/template>
+
+</code></pre>
+  </div>
+
+
+  <!-- computed -->
+  <div class="box">
+    <h2>computed</h2>
+    <p>vue3 de computed kullanımı aşşağıdaki gibidir</p>
+    <p>
+      Bir değeri başka değerlerden hesapla ve bu hesaplamayı Vue takip etsin. ve içerisindeki değişken değiştiğinde 
+      yeniden hesaplansın
+    </p>
+<pre><code>
+&lt;script setup>
+ 
+import { ref, computed } from 'vue'
+
+const firstName = ref('Sergen')
+const lastName = ref('Aslan')
+
+const fullName = computed(() => {
+  return `${firstName.value} ${lastName.value}`
+})
+function changeName() {
+   firstName.value  = 'Aytaç'
+}
+&lt;/script>
+
+&lt;template>
+  &lt;h1> {{fullName }} &lt;/h1>
+  &lt;button @click="changeName">İsmi Değişitir&lt;/button>
+&lt;/template>
+
+&lt;style scoped>&lt;/style>
+
+
+</code></pre>
+  </div>
+
+
+  <!-- watch -->
+  <div class="box">
+    <h2>watch</h2>
+    <p>vue3 de wathc kullanımı aşşağıdaki örnekteki gibidir</p>
+<pre><code>
+&lt;script setup>
+ 
+import { ref, computed, watch } from 'vue'
+
+const firstName = ref('Sergen')
+const lastName = ref('Aslan')
+
+const fullName = computed(() => {
+  return `${firstName.value} ${lastName.value}`
+})
+function changeName() {
+   firstName.value  = 'Aytaç'
+}
+
+watch(fullName, (newValue, oldValue) => {
+  console.log('Eski:', oldValue)
+  console.log('Yeni:', newValue)
+})
+
+
+
+&lt;/script>
+
+&lt;template>
+  &lt;h1> {{fullName }} &lt;/h1>
+  &lt;button @click="changeName">İsmi Değişitir&lt;/button>
+&lt;/template>
+
+&lt;style scoped>&lt;/style>
+
+
+</code></pre>
+  </div>
+
+
+  <!-- watchEffect -->
+  <div class="box">
+    <h2>watchEffect</h2>
+    <p>
+      watchEffect in watch dan farkı şudur, hangi değişkenleri takip etmesi gerektiğiniz biz söylemeyiz.
+      kendisi watchEffect içerisinde kullanılan değişkenlere bakarak takip etmesi gereken değişkenleri belirler
+    </p>
+<pre><code>
+&lt;script setup>
+
+import { ref, watchEffect } from 'vue'
+
+const firstName = ref('Sergen')
+
+watchEffect(() => {
+  console.log('1111111111111111111111111111')
+  console.log(firstName.value)
+})
+
+&lt;/script>
+
+&lt;template>
+  &lt;h1> {{fullName }} &lt;/h1>
+  &lt;button @click="changeName">İsmi Değişitir&lt;/button>
+&lt;/template>
+
+&lt;style scoped>&lt;/style>
 </code></pre>
   </div>
 
