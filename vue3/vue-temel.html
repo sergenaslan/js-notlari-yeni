@@ -228,5 +228,34 @@ onUnmounted(() => {
   </div>
 
 
+    <!-- provide / inject  -->
+  <div class="box">
+    <h2>provide / inject</h2>
+    <p>
+      Vue'da parent component'ten çok derindeki child component'lere prop zinciri kurmadan veri aktarmak için kullanılır.
+    </p>
+<pre><code>
+  --paret component
+&lt;script setup>
+
+import { ref, provide } from 'vue'
+
+const count = ref(0)
+
+provide('count', count)
+
+&lt;/script>
+
+
+  --child component component
+&lt;script setup>
+import { inject } from 'vue'
+
+const count = inject('count')
+&lt;/script>
+</code></pre>
+  </div>
+
+
 </body>
 </html>
