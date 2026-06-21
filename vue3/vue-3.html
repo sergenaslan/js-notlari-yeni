@@ -190,5 +190,43 @@ watchEffect(() => {
 </code></pre>
   </div>
 
+
+    <!--onMounted,  onUnmounted -->
+  <div class="box">
+    <h2>onMounted,  onUnmounted</h2>
+    <p>onMounted,  onUnmounted özelliklerinin vue3 de kullanımı</p>
+<pre><code>
+&lt;script setup>
+
+import { onMounted, onUnmounted } from 'vue'
+
+onMounted(() => {
+  console.log('Component yüklendi')
+})
+
+onUnmounted(() => {
+  console.log('Component kaldırıldı')
+})
+
+
+
+const handleResize = () => {
+  console.log(window.innerWidth)
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+&lt;/script>
+
+</code></pre>
+  </div>
+
+
 </body>
 </html>
