@@ -133,9 +133,52 @@ function writeValue() {
   <!-- defineExpose -->
   <div class="box">
     <h2>defineExpose</h2>
-    <p></p>
+    <p>bu özellik child componentin kullandığı fonksiyonları veya değişkenleri 
+      parent componentte gönderip parent componentinde kullanbilmesini sağlayan bir 
+      özelliktir.
+    </p>
 <pre><code>
+--parent compnent
+&lt;script setup>
+import { ref } from 'vue'
+import ChildComponent from './ChildComponent.vue'
 
+const childRef = ref(null)
+
+function increaseCount() {
+  childRef.value.increment()
+}
+&lt;/script>
+
+&lt;template>
+  &lt;ChildComponent ref="childRef" />
+
+  &lt;button @click="increaseCount">
+    Arttır
+  &lt;/button>
+&lt;/template>
+
+
+--child component
+
+&lt;script setup>
+import { ref } from 'vue'
+  
+const count = ref(0)
+
+function increment() {
+  count.value++
+}
+
+defineExpose({
+  increment,
+  count
+})
+&lt;/script>
+
+&lt;template>
+  &lt;div>{{ count }}&lt;/div>
+&lt;/template>
 
 </code></pre>
   </div>
