@@ -83,6 +83,78 @@ const saveUser = () => {
   <!-- defineModel -->
   <div class="box">
     <h2>defineModel</h2>
+    <p>
+      bu özellik child component ile parent component arasında v-model bağlantısı 
+      kurmaya yarar
+    </p>
+<pre><code>
+--parent component
+&lt;script setup>
+ import ChildComponent from './CustomInput.vue'
+import { ref } from 'vue'
+
+const username = ref()
+
+function writeValue() {
+   console.log(username.value);
+}
+&lt;/script>
+
+&lt;template>
+ 
+  &lt;button @click="writeValue">Değeri Oku &lt;/button>
+  &lt;ChildComponent v-model="username">&lt;/ChildComponent>
+&lt;/template>
+
+&lt;style scoped>&lt;/style>
+
+
+--child component
+
+&lt;script setup>
+ 
+ const model = defineModel();
+
+&lt;/script>
+
+&lt;template>
+  &lt;input v-model="model" />
+&lt;/template>
+
+&lt;style scoped>&lt;/style>
+
+
+
+</code></pre>
+  </div>
+
+
+
+  <!-- defineExpose -->
+  <div class="box">
+    <h2>defineExpose</h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+
+  <!-- defineSlots -->
+  <div class="box">
+    <h2>defineSlots</h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+
+  <!-- defineOptions -->
+  <div class="box">
+    <h2>defineOptions</h2>
     <p></p>
 <pre><code>
 
