@@ -181,5 +181,38 @@ const { name, age } = toRefs(user.value)
   </div>
 
 
+
+    <!-- readonly -->
+  <div class="box">
+    <h2>readonly</h2>
+    <p>
+      bir ref veya reactive ile tanımlanmış bir değişkeni sadece okunabilir ve değeri değiştirilemez şekle 
+      dönüştürmek için kullanılan bir özellik. Değeştirmeye çalışıldığında hata verecektir.
+    </p>
+<pre><code>
+
+&lt;script setup>
+import { ref, readonly } from 'vue'
+
+const count = ref(0)
+
+const readonlyCount = readonly(count)
+ 
+&lt;/script>
+
+&lt;template>
+
+  &lt;h1>{{ readonlyCount  }} &lt;/h1>
+
+
+  &lt;button @click="readonlyCount++">
+    Değiştir
+  &lt;/button>
+
+&lt;/template>
+
+</code></pre>
+  </div>
+
 </body>
 </html>
