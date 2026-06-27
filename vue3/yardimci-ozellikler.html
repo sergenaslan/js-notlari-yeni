@@ -1,0 +1,185 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1></h1>
+
+  <!-- Reactive -->
+  <div class="box">
+    <h2>Reactive</h2>
+    <p>
+      Bir veri değiştiğinde, onu kullanan her yer otomatik olarak güncellensin.
+      Vue 3'te bir  Object, Array, Map, Set gibi referans tiplerini  tamamen 
+      reaktif hale getiren bir fonksiyondur.
+    </p>
+<pre><code>
+
+import { reactive } from 'vue'
+
+
+const userData = {
+  name: 'Sergen'
+}
+
+--vue js yukarıdaki userData değişkenindeki değişiklikleri takip etmez 
+--vue js aşşağıdaki user değişkenindeki değişiklikleri takip eder.  
+--kullanıdığı yerleride değiştirir. 
+--aşşağıdaki değişken reactive fonksiyonu  kullanılarak oluşturuldu.
+
+const user = reactive({
+  name: 'Sergen',
+  age: 28
+})
+
+reactive({}), reactive([]), reactive(new Map()),
+
+
+&lt;script setup>
+import { reactive } from 'vue'
+
+const user = reactive({
+  name: 'Sergen'
+})
+
+function changeName() {
+  user.name = 'Mehmet'
+}
+
+const products = reactive([
+  'Elma',
+  'Armut'
+])
+&lt;/script>
+
+&lt;template>
+  &lt;h1>{{ user.name }}&lt;/h1>
+  &lt;ul>
+    &lt;li v-for="prd in products">
+      {{prd }}
+    &lt;/li>
+  &lt;/ul>
+
+  &lt;button @click="changeName">
+    Değiştir
+  &lt;/button>
+  &lt;button @click="products.push('Muz')">
+    Meyve Ekle
+  &lt;/button>
+&lt;/template>
+
+</code></pre>
+  </div>
+
+  <!-- Reactive -2 -->
+  <div class="box">
+    <h2> Reactive -2 </h2>
+    <p></p>
+<pre><code>
+
+
+let user = reactive({
+  name: 'Sergen'
+})
+  --yanlış reactive kullanımı
+user = {
+  name: 'Ahmet'
+}
+
+--doğru kullanım
+
+Object.assign(user, {
+  name: 'Ahmet'
+})
+
+-- destructuring (const { name } = user) yaparsan reaktif bağlantı kopar.
+
+const { name } = user
+</code></pre>
+  </div>
+
+
+  <!-- toRef() -->
+  <div class="box">
+    <h2>toRef()</h2>
+    <p>
+      toRef(), bir objenin tek bir özelliğini ref haline getirir. 
+      Ama yeni bir ref oluşturmaz, orijinal property'ye bağlı (linked) bir ref oluşturur.
+      Bir objenin tek bir değerine reactive bozmadan destructuring yaparak ref ile tanımlanmış gibi kullanabiliriz.
+    </p>
+<pre><code>
+
+&lt;script setup>
+import { ref, toRef } from 'vue'
+
+const user = ref({
+  name: 'Sergen',
+  age: '25'
+})
+
+function changeName() {
+  user.value.name = 'Mehmet'
+}
+
+const isim = toRef(user.value, 'name')
+const age = toRef(user.value, 'age')
+
+
+&lt;/script>
+
+&lt;template>
+
+  &lt;h1>{{ isim  }} - {{ age  }}&lt; /h1>
+
+
+  &lt;button @click="changeName">
+    Değiştir
+  &lt;/button>
+
+&lt;/template>
+
+
+</code></pre>
+  </div>
+
+
+
+    <!-- toRefs -->
+  <div class="box">
+    <h2>toRefs</h2>
+    <p>
+      toRef in yaptğının aynısını çoklu versiyon şeklinde yapar. her birini tek tek yazma
+      durumunda kalmadan yapar.
+    </p>
+<pre><code>
+&lt;script setup>
+import { ref, toRefs } from 'vue'
+
+const user = ref({
+  name: 'Sergen',
+  age: 25
+})
+
+function changeName() {
+  user.value.name = 'Aslan'
+  user.value.age = 27
+}
+
+const { name, age } = toRefs(user.value)
+
+&lt;/script>
+
+&lt;template>
+
+  &lt;h1>{{ name  }} - {{ age }}&lt;/h1>
+
+
+  &lt;button @click="changeName">
+    Değiştir
+  &lt;/button>
+
+&lt;/template>
+
+</code></pre>
+  </div>
+
+
+</body>
+</html>
