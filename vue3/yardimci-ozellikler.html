@@ -214,5 +214,73 @@ const readonlyCount = readonly(count)
 </code></pre>
   </div>
 
+
+
+  <!-- shallowRef() -->
+  <div class="box">
+    <h2>shallowRef()</h2>
+    <p>
+      <ul>
+        <li>
+          çok büyük obje verilerinin (veryBigProductList) içerisindeki verileri proxy ile kaplamamak ve performansı artırmak 
+          için kullanılır.
+        </li>
+        <li>
+          Normalde ref() içine bir obje koyarsan Vue objenin tüm içindeki property'leri reactive yapar.
+        </li>
+        <li>
+          shallowRef() ise yalnızca en dıştaki (top-level) değeri reactive yapar.
+        </li>
+        <li>
+           ref() .value değişirse Vue bunu algılar. ✅ 
+        </li>
+        <li>
+          shallowRef() .value içindeki property'ler değişirse Vue bunu izlemez. ❌ 
+        </li>
+      </ul>
+    </p>
+<pre><code>
+const user = ref({
+    name: 'Sergen'
+})
+
+user.value.name = 'Ali' -- güncellenir ✅
+
+const user = shallowRef({
+    name: 'Sergen'
+})
+
+user.value.name = 'Ali' --güncellenmez ❌
+
+
+const users = shallowRef(veryBigProductList)
+
+users.value = {data} -- güncellenir ✅
+
+</code></pre>
+  </div>
+
+
+  <!-- triggerRef() -->
+  <div class="box">
+    <h2>triggerRef()</h2>
+    <p>
+      shallowRef() ile tanımlanan değişkenler içersindeki veride güncelleme olduğunda vue 
+      render etmez tepki vermez bunun için el ile vue ya render yaptırabilmemizi sağlar.  
+    </p>
+<pre><code>
+  
+const user = shallowRef({
+    name: 'Sergen'
+})
+
+user.value.name = 'Ali'
+triggerRef(user) --vue böyle yapınca render eder
+
+</code></pre>
+  </div>
+
+
+
 </body>
 </html>
