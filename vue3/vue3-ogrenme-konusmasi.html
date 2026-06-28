@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue 3 Öğrenme Konuşması</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f5f7fa;
+      color: #222;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 36px;
+      border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.08);
+    }
+    h1 {
+      margin-top: 0;
+      color: #1f2937;
+      border-bottom: 3px solid #42b883;
+      padding-bottom: 12px;
+    }
+    h2 {
+      margin-top: 36px;
+      color: #35495e;
+    }
+    h3 {
+      margin-top: 28px;
+      color: #2f4858;
+    }
+    .message {
+      margin: 28px 0;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .user {
+      background: #eef6ff;
+      border-left: 5px solid #3b82f6;
+    }
+    .assistant {
+      background: #f0fff6;
+      border-left: 5px solid #42b883;
+    }
+    .label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    code {
+      font-family: Consolas, Monaco, monospace;
+    }
+    ul, ol {
+      padding-left: 26px;
+    }
+    .note {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 18px 0;
+    }
+    a {
+      color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vue 3 Öğrenme Konuşması</h1>
+
+    <div class="message user">
+      <div class="label">Kullanıcı</div>
+      <p>Vue yi çok iyi biliyorum şimdi vue 3 öğrenmek istiyorum nasıl ve nereden başlamalıyım</p>
+    </div>
+
+    <div class="message assistant">
+      <div class="label">Asistan</div>
+      <p>Vue 2’yi iyi biliyorsan Vue 3’e <strong>“sıfırdan” değil, fark odaklı</strong> geçmelisin. En hızlı yol bu.</p>
+      <p>Ben olsam şu sırayla giderdim:</p>
+
+      <h2>1. Vue 2 → Vue 3 farklarını öğren</h2>
+      <p>Önce şunları kafana oturt:</p>
+      <ul>
+        <li>Vue 3 neden çıktı?</li>
+        <li>Vue 2’den ne değişti?</li>
+        <li>Options API duruyor mu? <strong>Evet.</strong></li>
+        <li>Composition API neden geldi?</li>
+        <li>Reactivity sistemi nasıl değişti?</li>
+      </ul>
+
+      <p>Öğrenilecek başlıklar:</p>
+      <ul>
+        <li><code>ref()</code></li>
+        <li><code>reactive()</code></li>
+        <li><code>computed()</code></li>
+        <li><code>watch()</code></li>
+        <li><code>watchEffect()</code></li>
+        <li>lifecycle hooks: <code>onMounted</code>, <code>onUnmounted</code></li>
+        <li><code>provide / inject</code></li>
+      </ul>
+
+      <h2>2. script setup öğren</h2>
+      <p>Vue 3’ün gerçek olayı burada.</p>
+
+      <p>Vue 2:</p>
+      <pre><code>export default {
+  data() {},
+  methods: {},
+  computed: {}
+}</code></pre>
+
+      <p>Vue 3:</p>
+      <pre><code>&lt;script setup&gt;
+import { ref } from 'vue'
+
+const count = ref(0)
+
+function increment() {
+  count.value++
+}
+&lt;/script&gt;</code></pre>
+
+      <p>Buna alışman lazım çünkü modern Vue böyle yazılıyor.</p>
+
+      <h2>3. Vue macro'ları öğren</h2>
+      <p>Bunlar Vue 3’te çok önemli:</p>
+      <ul>
+        <li><code>defineProps()</code></li>
+        <li><code>defineEmits()</code></li>
+        <li><code>defineExpose()</code></li>
+        <li><code>defineSlots()</code></li>
+        <li><code>defineOptions()</code></li>
+        <li><code>defineModel()</code></li>
+      </ul>
+      <p>Özellikle önce şunlara bak:</p>
+      <ul>
+        <li><code>defineProps</code></li>
+        <li><code>defineEmits</code></li>
+        <li><code>defineModel</code></li>
+      </ul>
+
+      <h2>4. reactivity sistemini derin öğren</h2>
+      <p>Vue 2 biliyorsan burada kritik fark var.</p>
+      <p>Şunları bil:</p>
+      <ul>
+        <li>Neden <code>ref().value</code> var?</li>
+        <li><code>reactive</code> vs <code>ref</code></li>
+        <li>destructuring neden reactivity bozabilir?</li>
+        <li><code>toRefs()</code></li>
+        <li><code>toRef()</code></li>
+        <li><code>readonly()</code></li>
+        <li><code>shallowRef()</code></li>
+        <li><code>shallowReactive()</code></li>
+        <li><code>markRaw()</code></li>
+        <li><code>nextTick()</code></li>
+      </ul>
+      <p>Bu bölüm seni orta seviyeden ileri taşır.</p>
+
+      <h2>5. component iletişimi</h2>
+      <p>Vue 2 biliyorsun ama Vue 3 versiyonuyla:</p>
+      <ul>
+        <li>props</li>
+        <li>emit</li>
+        <li>component <code>v-model</code></li>
+        <li>multiple <code>v-model</code></li>
+        <li><code>provide/inject</code></li>
+        <li>template refs</li>
+        <li><code>useTemplateRef()</code></li>
+      </ul>
+
+      <h2>6. composables öğren</h2>
+      <p>Bu Vue 3’ün game changer kısmı.</p>
+
+      <p>Vue 2 mixin:</p>
+      <pre><code>mixins: [userMixin]</code></pre>
+
+      <p>Vue 3:</p>
+      <pre><code>useUser()</code></pre>
+
+      <p>Öğren:</p>
+      <ul>
+        <li>composable nedir</li>
+        <li>naming convention: <code>useX</code></li>
+        <li>state paylaşımı</li>
+        <li>reusable logic</li>
+        <li>side effects yönetimi</li>
+      </ul>
+
+      <h2>7. lifecycle farkları</h2>
+      <p>Vue 2:</p>
+      <pre><code>mounted
+created
+destroyed</code></pre>
+
+      <p>Vue 3:</p>
+      <pre><code>onMounted()
+onBeforeUnmount()</code></pre>
+
+      <p>Mapping öğren.</p>
+
+      <h2>8. yeni directive/template özellikleri</h2>
+      <ul>
+        <li>fragment: tek root zorunlu değil</li>
+        <li>teleport</li>
+        <li>suspense</li>
+        <li>dynamic components</li>
+        <li>async components</li>
+      </ul>
+
+      <h2>9. performans konuları</h2>
+      <ul>
+        <li><code>defineAsyncComponent</code></li>
+        <li><code>keep-alive</code></li>
+        <li>lazy loading</li>
+        <li>tree shaking</li>
+        <li>shallow APIs</li>
+      </ul>
+
+      <h2>10. ecosystem</h2>
+      <p>Vue 3 ile birlikte bunlar da değişti:</p>
+      <ul>
+        <li>Vue Router 4</li>
+        <li>Pinia: Vuex yerine</li>
+        <li>Vite: Webpack yerine</li>
+      </ul>
+      <p>Çok önemli.</p>
+
+      <h2>Sana özel önerim</h2>
+      <p>Bu sırayla git:</p>
+
+      <h3>Hafta 1</h3>
+      <ul>
+        <li><code>ref</code></li>
+        <li><code>reactive</code></li>
+        <li><code>computed</code></li>
+        <li><code>watch</code></li>
+        <li><code>watchEffect</code></li>
+        <li>lifecycle</li>
+      </ul>
+
+      <h3>Hafta 2</h3>
+      <ul>
+        <li><code>script setup</code></li>
+        <li><code>defineProps</code></li>
+        <li><code>defineEmits</code></li>
+        <li><code>defineModel</code></li>
+        <li>component <code>v-model</code></li>
+      </ul>
+
+      <h3>Hafta 3</h3>
+      <ul>
+        <li>composables</li>
+        <li><code>provide/inject</code></li>
+        <li>template refs</li>
+        <li>teleport</li>
+        <li>suspense</li>
+      </ul>
+
+      <h3>Hafta 4</h3>
+      <ul>
+        <li>Pinia</li>
+        <li>Vue Router 4</li>
+        <li>async components</li>
+      </ul>
+
+      <h2>Nereden öğrenilir?</h2>
+      <p>En iyi kaynak: <a href="https://vuejs.org" target="_blank">Vue resmi docs</a></p>
+      <p>Özellikle:</p>
+      <ul>
+        <li>Guide</li>
+        <li>Composition API</li>
+        <li>API Reference</li>
+        <li>Migration Guide</li>
+      </ul>
+
+      <div class="note">
+        Benim önerim: Sen zaten Vue biliyorsun. En mantıklısı “Vue 2 bilen geliştirici için Vue 3 kampı” yapmak.
+      </div>
+    </div>
+
+    <div class="message user">
+      <div class="label">Kullanıcı</div>
+      <p>bana bu konuşmayı bir html çıktısı olarak verir misin bütün maddelerin bütün yazdıklarının içinde olduğu</p>
+    </div>
+
+    <div class="message assistant">
+      <div class="label">Asistan</div>
+      <h2>Destructuring reactivity neden bozar?</h2>
+      <p>Bu Vue 3’te çok kritik bir nokta. Vue 2 biliyorsan ilk başta tuzak gibi gelir.</p>
+
+      <h3>Problem ne?</h3>
+      <p>Vue 3 reactivity, objenin <strong>property erişimini proxy ile takip eder</strong>.</p>
+
+      <pre><code>const state = reactive({
+  name: 'Sergen',
+  age: 30
+})</code></pre>
+
+      <p>Burada:</p>
+      <pre><code>state.name</code></pre>
+
+      <p>Vue bunu izler. Çünkü erişim hâlâ <code>state</code> objesi üzerinden.</p>
+
+      <h3>Destructuring yapınca ne oluyor?</h3>
+      <pre><code>const { name } = state</code></pre>
+      <p>Artık <code>name</code>, <code>state</code> ile bağlantılı reactive property değil. Sadece düz bir değer olur.</p>
+
+      <pre><code>console.log(name)</code></pre>
+      <p>Bu artık şöyle davranır:</p>
+      <pre><code>const name = 'Sergen'</code></pre>
+
+      <h3>Örnek</h3>
+      <p>Hatalı:</p>
+      <pre><code>const state = reactive({
+  count: 0
+})
+
+const { count } = state
+
+state.count++
+
+console.log(count)</code></pre>
+
+      <p>Beklenti:</p>
+      <pre><code>1</code></pre>
+
+      <p>Gerçek:</p>
+      <pre><code>0</code></pre>
+
+      <p>Çünkü destructuring bağlantıyı kopardı.</p>
+
+      <h3>Neden?</h3>
+      <p>Çünkü bu:</p>
+      <pre><code>state.count</code></pre>
+      <p>proxy getter'dan geçer.</p>
+
+      <p>Ama bu:</p>
+      <pre><code>count</code></pre>
+      <p>artık proxy ile alakalı değildir.</p>
+
+      <p>Vue'nun takip ettiği şey:</p>
+      <pre><code>state -&gt; count</code></pre>
+
+      <p>Ama sen şunu yaptın:</p>
+      <pre><code>const count = state.count</code></pre>
+
+      <p>Vue artık bunu izleyemez.</p>
+
+      <h3>Çözüm 1: toRefs()</h3>
+      <p>Reactive objeyi parçalayacaksan:</p>
+      <pre><code>import { reactive, toRefs } from 'vue'
+
+const state = reactive({
+  count: 0,
+  name: 'Sergen'
+})
+
+const { count, name } = toRefs(state)</code></pre>
+
+      <p>Artık:</p>
+      <pre><code>count.value</code></pre>
+      <p>reactive kalır.</p>
+
+      <pre><code>state.count++
+console.log(count.value)</code></pre>
+
+      <p>Çıktı:</p>
+      <pre><code>1</code></pre>
+
+      <h3>Çözüm 2: toRef()</h3>
+      <p>Tek property lazımsa:</p>
+      <pre><code>const count = toRef(state, 'count')</code></pre>
+
+      <h3>ref'te durum farklı mı?</h3>
+      <p>Evet.</p>
+      <pre><code>const count = ref(0)</code></pre>
+      <p>Bunda zaten primitive ref taşıyorsun. Destructuring konusu objelerde problem.</p>
+
+      <h3>props'ta da aynı tuzak var</h3>
+      <pre><code>const props = defineProps({
+  title: String
+})</code></pre>
+
+      <p>Şunu yaparsan:</p>
+      <pre><code>const { title } = props</code></pre>
+      <p>reactivity bozulur.</p>
+
+      <p>Doğrusu:</p>
+      <pre><code>const { title } = toRefs(props)</code></pre>
+
+      <p>veya modern Vue’de:</p>
+      <pre><code>const title = toRef(props, 'title')</code></pre>
+
+      <div class="note">
+        Kısa kural: <strong><code>reactive()</code> objesini direkt destructure etme.</strong><br>
+        Reactive kalmasını istiyorsan <code>toRefs()</code> / <code>toRef()</code> kullan.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

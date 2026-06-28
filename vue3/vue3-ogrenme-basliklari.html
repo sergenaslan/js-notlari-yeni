@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vue 3 Öğrenme Başlıkları</title>
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+    color:#222;
+    line-height:1.7;
+    margin:40px;
+}
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+h1,h2{
+    color:#2c3e50;
+}
+.section{
+    margin-bottom:28px;
+}
+ul{
+    margin-top:8px;
+}
+.note{
+    background:#eef7ff;
+    border-left:5px solid #3498db;
+    padding:12px 16px;
+    border-radius:6px;
+}
+code, pre{
+    background:#f1f1f1;
+    padding:2px 5px;
+    border-radius:4px;
+}
+pre{
+    padding:12px;
+    overflow:auto;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+}
+th{
+    background:#f0f0f0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Vue 3'te Bilmen Gereken Özellikler ve Öğrenme Yol Haritası</h1>
+
+<div class="note">
+Bu doküman konuşmamızdaki tüm başlıkları ve ek önerileri tek bir HTML sayfasında toplar.
+</div>
+
+<h2>1. Temel Composition API</h2>
+<p>Vue 3'ün kalbi burasıdır.</p>
+<ul>
+<li>ref()</li>
+<li>reactive()</li>
+<li>computed()</li>
+<li>watch()</li>
+<li>watchEffect()</li>
+<li>readonly()</li>
+<li>shallowRef()</li>
+<li>shallowReactive()</li>
+<li>toRef()</li>
+<li>toRefs()</li>
+<li>unref()</li>
+<li>isRef()</li>
+</ul>
+<p>Bunları iyi bilirsen Vue 3'ün yaklaşık %60'ı oturur.</p>
+
+<h2>2. &lt;script setup&gt;</h2>
+<ul>
+<li>Normal setup()</li>
+<li>&lt;script setup&gt;</li>
+<li>Top-level değişken kullanımı</li>
+<li>Template içinde otomatik erişim</li>
+<li>Import edilenlerin doğrudan kullanımı</li>
+</ul>
+
+<pre><code>&lt;script setup&gt;
+import { ref } from 'vue'
+
+const count = ref(0)
+&lt;/script&gt;</code></pre>
+
+<h2>3. Compiler Macrolar</h2>
+<ul>
+<li>defineProps()</li>
+<li>defineEmits()</li>
+<li>defineExpose()</li>
+<li>defineModel()</li>
+<li>defineOptions()</li>
+<li>defineSlots()</li>
+</ul>
+
+<h2>4. Component İletişimi</h2>
+<ul>
+<li>Parent → Child : Props</li>
+<li>Child → Parent : Emits</li>
+<li>Component v-model</li>
+<li>Multiple v-model</li>
+<li>Template Refs</li>
+<li>defineExpose()</li>
+</ul>
+
+<h2>5. Lifecycle Hooks</h2>
+<ul>
+<li>onBeforeMount</li>
+<li>onMounted</li>
+<li>onBeforeUpdate</li>
+<li>onUpdated</li>
+<li>onBeforeUnmount</li>
+<li>onUnmounted</li>
+<li>onErrorCaptured</li>
+<li>onActivated</li>
+<li>onDeactivated</li>
+</ul>
+
+<h2>6. Template Özellikleri</h2>
+<ul>
+<li>v-if / v-else-if / v-else</li>
+<li>v-show</li>
+<li>v-for</li>
+<li>key</li>
+<li>v-bind</li>
+<li>:class</li>
+<li>:style</li>
+<li>v-on</li>
+<li>@click</li>
+<li>Event Modifiers</li>
+<li>Key Modifiers</li>
+<li>Form Binding</li>
+<li>v-model</li>
+</ul>
+
+<h2>7. Slot Sistemi</h2>
+<ul>
+<li>Default Slot</li>
+<li>Named Slot</li>
+<li>Scoped Slot</li>
+<li>Dynamic Slot</li>
+</ul>
+
+<h2>8. Dependency Injection</h2>
+<ul>
+<li>provide()</li>
+<li>inject()</li>
+</ul>
+
+<h2>9. Template Refs</h2>
+<ul>
+<li>DOM erişimi</li>
+<li>Child Component erişimi</li>
+</ul>
+
+<h2>10. Custom Composables</h2>
+<ul>
+<li>useAuth()</li>
+<li>useFetch()</li>
+<li>useCounter()</li>
+<li>useModal()</li>
+</ul>
+
+<h2>11. Teleport</h2>
+<p>DOM'un başka bir yerine render eder.</p>
+
+<h2>12. Suspense</h2>
+<p>Async component yüklenirken loading göstermek için.</p>
+
+<h2>13. Async Components</h2>
+<p>defineAsyncComponent() ile lazy loading.</p>
+
+<h2>14. Built-in Components</h2>
+<ul>
+<li>KeepAlive</li>
+<li>Transition</li>
+<li>TransitionGroup</li>
+<li>Teleport</li>
+<li>Suspense</li>
+</ul>
+
+<h2>15. Custom Directives</h2>
+<p>Örneğin: <code>v-focus</code></p>
+
+<h2>16. Render Mekanizması</h2>
+<ul>
+<li>Virtual DOM</li>
+<li>Reactivity Tracking</li>
+<li>Dependency Collection</li>
+<li>Batching</li>
+<li>nextTick()</li>
+</ul>
+
+<h2>17. Event Sistemi</h2>
+<ul>
+<li>Native Events</li>
+<li>Custom Events</li>
+<li>Modifiers</li>
+<li>Event Propagation</li>
+</ul>
+
+<h2>18. Vue Router</h2>
+<ul>
+<li>Routes</li>
+<li>Nested Routes</li>
+<li>Params</li>
+<li>Query</li>
+<li>Navigation Guards</li>
+<li>Lazy Routes</li>
+<li>Programmatic Navigation</li>
+</ul>
+
+<h2>19. Pinia</h2>
+<ul>
+<li>State</li>
+<li>Getters</li>
+<li>Actions</li>
+<li>Store Composition</li>
+<li>Persisted State</li>
+</ul>
+
+<h2>20. Performans</h2>
+<ul>
+<li>v-memo</li>
+<li>v-once</li>
+<li>Lazy Loading</li>
+<li>Async Components</li>
+<li>KeepAlive</li>
+<li>Shallow Reactivity</li>
+</ul>
+
+<h2>21. SSR / SSG</h2>
+<p>Hydration, Server Side Rendering ve Static Site Generation (Nuxt).</p>
+
+<h2>Önerilen Öğrenme Sırası</h2>
+<ol>
+<li>ref()</li>
+<li>reactive()</li>
+<li>computed()</li>
+<li>watch()</li>
+<li>watchEffect()</li>
+<li>toRef() / toRefs()</li>
+<li>&lt;script setup&gt;</li>
+<li>defineProps()</li>
+<li>defineEmits()</li>
+<li>defineModel()</li>
+<li>defineExpose()</li>
+<li>provide() / inject()</li>
+<li>Lifecycle Hooks</li>
+<li>Slots</li>
+<li>Composables</li>
+<li>Template Refs (useTemplateRef dahil)</li>
+<li>Teleport</li>
+<li>Suspense</li>
+<li>Async Components</li>
+<li>Vue Router</li>
+<li>Pinia</li>
+<li>Performans Optimizasyonları</li>
+</ol>
+
+<h2>Ek Tavsiyeler</h2>
+<ul>
+<li>Örnek yazarak öğrenmeye devam et.</li>
+<li>Her konudan sonra küçük projeler geliştir.</li>
+<li>"Bunun neresi hatalı?" şeklinde kod analizi yapmak öğrenmeyi hızlandırır.</li>
+<li>Temeller oturduktan sonra gerçek projelerde Vue Router ve Pinia kullan.</li>
+</ul>
+
+</div>
+</body>
+</html>
