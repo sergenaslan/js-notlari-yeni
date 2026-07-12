@@ -1,0 +1,74 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>Pinia Notları</h1>
+
+  <!-- defineStore -->
+  <div class="box">
+    <h2>defineStore </h2>
+    <p>Tabii. defineStore, Pinia'da bir store (merkezi state alanı) oluşturmak için kullanılan temel fonksiyondur.</p>
+    <p></p>
+<pre><code>
+defineStore(id, setupFunction) iki parametre alır 
+1. parametre storeun id sidir nerede kulanılacağnı anlatan bir tanımlama yapılabilinir.
+1. paramtre ise fonksiyonların içerisinde olduğu e callback fonksiyondur.
+
+defineStore(id, setupFunction)
+
+--------------------------
+
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useCounterStore = defineStore('counter', () => {
+
+  // State
+  const count = ref(0)
+
+  // Getter
+  const doubleCount = computed(() => {
+    return count.value * 2
+  })
+
+  // Action
+  function increment() {
+    count.value++
+  }
+
+  // Dışarı açılanlar
+  return {
+    count,
+    doubleCount,
+    increment
+  }
+
+})
+</code></pre>
+  </div>
+
+
+    <!--  storeToRefs   -->
+  <div class="box">
+    <h2>storeToRefs</h2>
+    <p>
+      storeToRefs(), Pinia store'daki state ve computed 'ları destructure
+      ederken reaktifliği korumak için kullanılır. fonksiyonlar ise doğrudan
+      store'dan alınır.
+    </p>
+<pre><code>
+
+import { useCounterStore } from '@/stores/counter'
+import { storeToRefs } from 'pinia'
+
+const counterStore = useCounterStore()
+
+const { count, doubleCount } = storeToRefs(counterStore)
+
+Normal destructure edildi çünkü fonksiyonlarda reaktiflik sorunu yoktur.
+const { increment } = counterStore
+
+</code></pre>
+  </div>
+
+
+</body>
+</html>
