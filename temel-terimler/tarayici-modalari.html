@@ -1,0 +1,145 @@
+<html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
+<body>
+    <h1>Tarayıcı modları</h1>
+
+  <!-- Hash Router  -->
+  <div class="box">
+    <h2>Hash Router</h2>
+    <p>
+      İnternetin ilk yıllarında,  sayfa içinde hızlı yönlendirmeler yapabilmek çapa linkler
+      oluşturabilmek için yapılmış bir özelliktir. Taraycı yeniden yüklenmeden sunucuya istek atılmadan 
+      sayfa içi linke gidilir. Tarayıcı bunu tamamen kendi içinde yönetir.
+    </p>
+<pre><code>
+
+  https://example.com/#about
+  https://example.com/#about
+  
+&lt;a href="#about">Hakkımızda Git</a>
+
+</code></pre>
+    <h2>Peki SPA'lar bunu neden kullanmaya başladı?</h2>
+    <p>JavaScript gelişmeye başlayınca geliştiriciler şunu fark etti:</p>
+    <p>Hash değişince #/about #/contact sayfa yenilenmiyor. Bunu fırsata çevirdiler. Dediler ki</p>
+    <p>"Hash değişince yeni component gösterelim."</p>
+    <p>Böylece ilk SPA routing mantığı ortaya çıktı. <b>Örneğin</b> </p>
+    <pre><code>
+      https://example.com/#/about
+
+      olunca JavaScript
+
+      if(location.hash == "#/about"){
+          // About sayfasını göster
+      }
+    </code></pre>
+    <h6>Vue'da karşılığı</h6>
+    <p> <b>createWebHashHistory()</b>  </p>
+    <pre><code>
+    Adresler şöyle görünür
+    https://site.com/#/
+    https://site.com/#/products
+    https://site.com/#/contact
+
+    Tarayıcı 
+    hashchange  isimli bir event üretir.
+
+    window.addEventListener("hashchange", () => {
+        console.log(location.hash);
+    });
+
+    </code></pre>
+
+  </div>
+
+
+
+    <!-- History API -->
+  <div class="box">
+    <h2>History API</h2>
+    <p>HTML5 History API, web sayfasını yeniden yüklemeden tarayıcının adres çubuğundaki URL'yi değiştirmeyi ve tarayıcının 
+      ileri/geri geçmişini programatik olarak yönetmeyi sağlayan,
+      HTML5 ile standartlaştırılmış bir tarayıcı özelliğidir.
+      Bu özellik JavaScript aracılığıyla kullanılır.</p>
+    <p></p>
+    <p></p>
+<pre><code>
+HTML5 History API olmadan           HTML5 History API sayesinde ise
+      Tıklama                               example.com
+        ↓                                       ↓
+      Sunucu                              example.com/about
+        ↓                           URL değişir fakat sayfa yenilenmez.
+    Yeni HTML                            Sadece JavaScript çalışır.
+        ↓
+Sayfa tamamen yenilenir
+</code></pre>
+<p>SPA (Single Page Application) yapısını mümkün hale getirmektir.</p>
+
+<h3>History API'nin 5 temel metodu vardır.</h3>
+<ol>
+  <li>history.pushState()</li>
+  <li>history.replaceState()</li>
+  <li>history.back()</li>
+  <li>history.forward()</li>
+  <li>history.go()</li>
+</ol>
+<h4>1-) pushState()</h4>
+<p>En çok kullanılanıdır. Yeni bir URL ekler. Örneğin:</p>
+<pre><code>
+  history.pushState({}, '', '/about')
+
+  /
+  ↓
+  /about
+
+  url değişir ama sayfa yenilenmez.
+</code></pre>
+<h4>2-) replaceState()</h4>
+<p>URL'yi değiştirir. Ama geçmişe eklemez.</p>
+<pre><code>
+  history.replaceState({}, '', '/login')
+
+</code></pre>
+<h4>3-) back()</h4>
+<p>Tarayıcıdaki ← tuşunun aynısıdır.</p>
+<pre><code>
+  history.back()
+  
+</code></pre>
+<h4>4-) forward()</h4>
+<p>İleri git</p>
+<pre><code>
+  history.forward()
+  
+</code></pre>
+<h4>5-) go()</h4>
+<p>İstenilen kadar ileri geri gider.</p>
+<pre><code>
+  history.go(-1)  // Bir önceki sayfa
+  history.go(-2)  // İki önceki sayfa
+  history.go(1)   // Bir ileri
+</code></pre>
+</div>
+
+  <!--  -->
+  <div class="box">
+    <h2></h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+
+  <!--  -->
+  <div class="box">
+    <h2></h2>
+    <p></p>
+<pre><code>
+
+
+</code></pre>
+  </div>
+
+</body>
+</html>
