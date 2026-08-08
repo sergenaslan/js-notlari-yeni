@@ -1,17 +1,65 @@
 <html><head><style>*{box-sizing: border-box;}body{font-family: Arial, sans-serif;background:#f6f7fb;max-width:1300px;margin:16px auto;display:flex;flex-wrap: wrap;justify-content: space-between;align-content: flex-start; }h1{width: 100%;}h2{margin:0;font-size:16px;}p{font-size:14px;line-height:1.6;}.box{width: 49%;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom: 35px;}pre{background:#0b1020;color:#e5e7eb;padding:12px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.5;margin-top: 10px;}</style></head>
 <body>
-  <h1></h1>
+  <h1>Vue Router</h1>
 
   <!-- createRouter -->
   <div class="box">
     <h2>createRouter</h2>
     <p>Tabii. createRouter, Vue Router'ın ana router nesnesini oluşturduğumuz fonksiyondur.</p>
+    <p> <b>Açıkçası projelerin %95'inde yalnızca bunlar kullanılır:history,routes, scrollBehavior()</b>  </p>
 <pre><code>
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
+
+import HomeView from '@/views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
 
 const router = createRouter({
+  // History modu
   history: createWebHistory(),
-  routes: []
+
+  // Tüm route'lar
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: AboutView
+    }
+  ],
+
+  // Sayfa değişince scroll davranışı
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+
+    return {
+      top: 0
+    }
+  },
+
+  // RouterLink aktif olduğunda eklenecek class
+  linkActiveClass: 'active',
+
+  // URL tamamen eşleştiğinde eklenecek class
+  linkExactActiveClass: 'exact-active',
+
+  // Route parse/stringify işlemleri
+  parseQuery(search) {
+    return Object.fromEntries(new URLSearchParams(search))
+  },
+
+  stringifyQuery(query) {
+    const params = new URLSearchParams(query)
+    return `?${params.toString()}`
+  }
 })
 
 export default router
@@ -19,12 +67,261 @@ export default router
   </div>
 
 
+  <!-- routes -->
+  <div class="box">
+    <h2>routes Nesnesi</h2>
+    <p>routes Vue Router'ın en önemli özelliğidir. Çünkü uygulamadaki tüm sayfaların (rotalar) tanımlandığı bir dizidir.</p>
+    <h4>Bir Route Nedir ? Route Record Nedir ?</h4>
+    <p>
+      Bu URL'ye gidildiğinde hangi component gösterilecek? gibi tanımlamalaırn 
+      yapıldığı routes dizisi içerisindeki her bir neyseneye route denir.
+      Bu tanımlama işleminede Route Record denir.
+    </p>
+<pre><code>
+  const router = createRouter({
+    routes: [
+      {
+        path: '/',
+        component: HomeView
+      }
+    ]
+  })
+
+</code></pre>
+<h4>Route Record içinde neler olabilir?</h4>
+<p>Aşşağıdaki Özellikler En Çok Kullanılan Özelliklerdir.</p>
+<pre><code>
+{
+    path: '/',                // URL'yi belirtir.
+    name: 'home',             // Route'a isim verir.
+    component: HomeView,      // Hangi Vue componentinin gösterileceğini belirtir.
+    children: [               // İç içe sayfalar oluşturur.
+      {
+          path: 'users',
+          component: Users
+      },
+      {
+          path: 'products',
+          component: Products
+      }
+    ]
+  meta: {                             // Ek bilgiler saklanır. Daha sonra Route Guard içinde kullanılabilir.
+      requiresAuth: true
+    }
+    beforeEnter(to, from, next) {     //Sadece o route için çalışan Guard'dır.
+      next();
+    }
+    redirect: '/login',               //  Başka sayfaya yönlendirir.  Kullanıcı / adresine gelince otomatik /home açılır.
+    alias: '/anasayfa'                // Aynı sayfanın birden fazla adresi olur. / ve /anasayfa aynı componenti gösterir.
+}
+</code></pre>
+
+<pre><code>
+
+{
+  path: '/about'
+}
+
+</code></pre>
+  </div>
+
+
+  <!-- history: -->
+  <div class="box">
+    <h2>History Nesnesi</h2>
+    <p>URL'nin nasıl davranacağını belirler.</p>
+    <h4>createWebHistory() </h4>
+    <p>Tarayıcının history api özelliğini kullanır.</p>
+<pre><code>
+const router = createRouter({
+  history: createWebHistory(),
+})
+
+/about
+/products
+/users
+</code></pre>
+  <h4>createWebHashHistory()</h4>
+  <p>Tarayıcının hash özelliğini kullanır.</p>
+  <pre><code>
+const router = createRouter({
+  history: createWebHistory(),
+})
+
+#/about
+#/products
+#/users
+</code></pre>
+  </div>
+
+
+  <!-- RouterView -->
+  <div class="box">
+    <h2>RouterView</h2>
+    <p>Vue Router'daki &lt;RouterView />, aktif route'a karşılık gelen component'in ekrana basıldığı yerdir.</p>
+<pre><code>
+
+template>
+  &lt;header> Header /header>
+
+  &lt;RouterView />
+
+  &lt;footer> Footer /footer>
+&lt;/template>
+
+</code></pre>
+  </div>
+
+
+
+    <!-- useRouter() -->
+  <div class="box">
+    <h2>useRouter()</h2>
+    <p>
+      useRouter(), Vue Router'ın router nesnesine erişmeni sağlayan composable'ıdır.
+      "Router'ı JavaScript içinde kullanarak yönlendirmeler yapabilmemizi sağlayan fonksiyondur."<
+      <br>
+      <b>Yönlendirme yapmak için gidilecek sayfayı belirlemek için kullanılır.</b>
+    </p>
+<pre><code>
+&lt;script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+router.push('/about')
+router.back()
+router.forward()
+
+
+&lt;/script>
+&lt;
+</code></pre>
+  </div>
+
+
+    <!-- useRoute -->
+  <div class="box">
+    <h2>useRoute</h2>
+    <p>
+      useRoute(), o an bulunduğu sayfanın (route'un) bilgilerini okumak için kullanılır.
+      <b>"Mevcut URL'nin bilgilerini verir."</b>
+    </p>
+<pre><code>
+
+&lt;script setup>
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+route.path	        Mevcut URL yolu
+route.params	      URL parametreleri
+route.query	        Query string verileri
+route.name	        Route adı
+route.fullPath    	Tam URL (/products?page=2)
+
+&lt;/script>
+
+</code></pre>
+  </div>
+
+  
+  <!-- RouterLink -->
+  <div class="box">
+    <h2>RouterLink</h2>
+    <p>
+      Vue Router'da sayfalar arasında geçiş yapmak için kullanılan bileşendir. 
+      a etiketi yerine sayfayı yenilemeden url değiştirmeyi mümkün kılar
+    </p>
+<pre><code>
+
+&lt;a href="/about">Hakkımızda</a>
+&lt;RouterLink to="/about">Hakkımızda</RouterLink>
+
+</code></pre>
+  </div>
+
+  <!-- router.push()  -->
+  <div class="box">
+    <h2> router.push()</h2>
+    <p>router.push() <b>JavaScript üzerinden</b> programatik olarak sayfa değiştirmek için kullanılır.</p>
+<pre><code>
+
+&lt;script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goAbout() {
+  router.push('/about') sayfasına gider.
+}
+
+function goContact() {
+  router.push({name: 'contact'}) name ile gitme
+}
+
+function goProductDetail() {  Parametre gönderme
+  router.push({                 /product/15
+    name: 'product',
+    params: {
+      id: 15
+    }
+  })
+}
+
+function goReviewDetail() {  Query gönderme
+  router.push({              /products?category=phone&page=2
+    name: 'review',
+    query: {
+      category: 'phone',
+      page: 2
+    }
+  })
+}
+
+&lt;/script>
+
+&lt;template>
+  &lt;button @click="goAbout">
+    Hakkımızda Git
+  &lt;/button>
+&lt;/template>
+
+</code></pre>
+  </div>
+
   <!--  -->
   <div class="box">
     <h2></h2>
     <p></p>
 <pre><code>
 
+&lt;
+</code></pre>
+  </div>
+
+
+    <!-- Senin öğrenme sıran için -->
+  <div class="box">
+    <h2>Senin öğrenme sıran için</h2>
+    <p>Senin öğrenme sıran için</p>
+<pre><code>
+Senin öğrenme sıran için
+
+Vue Router'ı sıfırdan öğrenirken şu sırayı öneririm:
+
+✅ history
+✅ routes
+✅ RouterView
+✅ RouterLink
+✅ useRouter()
+✅ useRoute()
+✅ router.push()
+
+✅ Dinamik Route (:id)
+✅ Nested Routes
+✅ Route Guards
+✅ Lazy Loading
+✅ scrollBehavior
 
 </code></pre>
   </div>
